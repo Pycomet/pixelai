@@ -65,6 +65,14 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
+            as={Link}
+            className="bg-gradient-to-tr light:from-yellow-500 dark:from-pink-500 dark:to-yellow-500 light:to-pink-500 text-white shadow-lg"
+          >
+            Sign In
+          </Button>
+        </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <Button
             isExternal
             as={Link}
             className="text-sm font-normal text-default-600 bg-default-100"
