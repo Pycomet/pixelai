@@ -41,6 +41,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.firebase/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -106,6 +107,9 @@ dist
 
 # Docusaurus cache and generated files
 .docusaurus
+
+.firebase
+./.firebase
 
 # Serverless directories
 .serverless/
