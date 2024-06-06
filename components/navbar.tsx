@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -22,9 +23,32 @@ import {
   HeartFilledIcon,
   Logo,
 } from "@/components/icons";
-import { signInWithGoogle } from "@/lib/firebase/auth";
+import { signInWithGoogle, signOut, onAuthStateChanged } from "@/lib/firebase/auth";
+import { User } from "firebase/auth";
+import { Avatar } from "@nextui-org/avatar";
+
 
 export const Navbar = () => {
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+      const unsubscribe = onAuthStateChanged((user) => {
+          setUser(user);
+      });
+
+      // Cleanup subscription on unmount
+      return () => unsubscribe();
+  }, []);
+
+  const handleSignIn = async () => {
+      await signInWithGoogle();
+  };
+
+  const handleSignOut = async () => {
+      await signOut();
+  };
+
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -63,14 +87,27 @@ export const Navbar = () => {
           </Link>
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            onClick={() => signInWithGoogle()}
-            className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-          >
-            Sign In
-          </Button>
-        </NavbarItem>
+        
+        {!user ? (
+          <NavbarItem className="hidden md:flex gap-2">
+            <Button
+              onClick={handleSignIn}
+              className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+            >
+              Sign In
+            </Button>
+          </NavbarItem>) : (
+            <NavbarItem className="hidden md:flex gap-2">
+              <Avatar isBordered className="cursor-pointer" as={Link} onClick={handleSignOut} src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"} />
+              {/* <Button
+                onClick={handleSignOut}
+                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+              >
+                Log Out
+              </Button> */}
+            </NavbarItem>
+          )
+        }
         <NavbarItem className="hidden md:flex">
           <Button
             isExternal

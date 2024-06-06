@@ -1,5 +1,5 @@
 // auth.ts
-import { auth } from "./firebaseConfig"; // Adjust the path to your config file
+import { auth } from "@/lib/firebase/firebaseConfig"; // Adjust the path to your config file
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged as _onAuthStateChanged } from "firebase/auth";
 import { User } from "firebase/auth";
 
