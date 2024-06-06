@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, ComponentType } from "react";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { SwitchProps, useSwitch } from "@nextui-org/switch";
 import { useTheme } from "next-themes";
@@ -13,6 +13,11 @@ export interface ThemeSwitchProps {
   className?: string;
   classNames?: SwitchProps["classNames"];
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SwitchComponentWrapper: FC<{ Component: ComponentType<any> } & any> = ({ Component, ...props }) => {
+  return <Component {...props} />;
+};
 
 export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   className,
@@ -39,7 +44,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   });
 
   return (
-    <Component
+    <SwitchComponentWrapper
+      Component={Component}
       {...getBaseProps({
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
@@ -76,6 +82,6 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           <MoonFilledIcon size={22} />
         )}
       </div>
-    </Component>
+    </SwitchComponentWrapper>
   );
 };
