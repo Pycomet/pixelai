@@ -9,28 +9,18 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      NEXT_FIREBASE_API_KEY: ${{ secrets.NEXT_FIREBASE_API_KEY }}
+      NEXT_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_FIREBASE_AUTH_DOMAIN }}
+      NEXT_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_FIREBASE_PROJECT_ID }}
+      NEXT_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_FIREBASE_STORAGE_BUCKET }}
+      NEXT_FIREBASE_SENDER_ID: ${{ secrets.NEXT_FIREBASE_SENDER_ID }}
+      NEXT_FIREBASE_APP_ID: ${{ secrets.NEXT_FIREBASE_APP_ID }}
+      NEXT_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_FIREBASE_MEASUREMENT_ID }}
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up environment variables
-        run: |
-          echo "NEXT_FIREBASE_API_KEY=${{ secrets.NEXT_FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_FIREBASE_AUTH_DOMAIN }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_PROJECT_ID=${{ secrets.NEXT_FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_FIREBASE_STORAGE_BUCKET }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_SENDER_ID=${{ secrets.NEXT_FIREBASE_SENDER_ID }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_APP_ID=${{ secrets.NEXT_FIREBASE_APP_ID }}" >> $GITHUB_ENV
-          echo "NEXT_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_FIREBASE_MEASUREMENT_ID }}" >> $GITHUB_ENV
-
       - run: npm install && npm run build
-        env:
-          NEXT_FIREBASE_API_KEY: ${{ secrets.NEXT_FIREBASE_API_KEY }}
-          NEXT_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_FIREBASE_AUTH_DOMAIN }}
-          NEXT_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_FIREBASE_PROJECT_ID }}
-          NEXT_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_FIREBASE_STORAGE_BUCKET }}
-          NEXT_FIREBASE_SENDER_ID: ${{ secrets.NEXT_FIREBASE_SENDER_ID }}
-          NEXT_FIREBASE_APP_ID: ${{ secrets.NEXT_FIREBASE_APP_ID }}
-          NEXT_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_FIREBASE_MEASUREMENT_ID }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -38,11 +28,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIXELAI_30F7A }}'
           channelId: live
           projectId: pixelai-30f7a
-        env:
-          NEXT_FIREBASE_API_KEY: ${{ secrets.NEXT_FIREBASE_API_KEY }}
-          NEXT_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_FIREBASE_AUTH_DOMAIN }}
-          NEXT_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_FIREBASE_PROJECT_ID }}
-          NEXT_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_FIREBASE_STORAGE_BUCKET }}
-          NEXT_FIREBASE_SENDER_ID: ${{ secrets.NEXT_FIREBASE_SENDER_ID }}
-          NEXT_FIREBASE_APP_ID: ${{ secrets.NEXT_FIREBASE_APP_ID }}
-          NEXT_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_FIREBASE_MEASUREMENT_ID }}
