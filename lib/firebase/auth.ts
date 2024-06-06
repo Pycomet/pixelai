@@ -13,7 +13,6 @@ export function onAuthStateChanged(cb: AuthStateChangedCallback): () => void {
 export async function signInWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
 
-    // Attempt login
     try {
         await signInWithPopup(auth, provider);
     } catch (error) {

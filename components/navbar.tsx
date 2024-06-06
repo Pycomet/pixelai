@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -20,6 +22,7 @@ import {
   HeartFilledIcon,
   Logo,
 } from "@/components/icons";
+import { signInWithGoogle } from "@/lib/firebase/auth";
 
 export const Navbar = () => {
 
@@ -62,7 +65,7 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
-            as={Link}
+            onClick={() => signInWithGoogle()}
             className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
           >
             Sign In
