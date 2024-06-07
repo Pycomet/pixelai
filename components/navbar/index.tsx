@@ -10,6 +10,13 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownSection,
+    DropdownMenu,
+    DropdownItem
+} from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
@@ -98,13 +105,37 @@ export const Navbar = () => {
             </Button>
           </NavbarItem>) : (
             <NavbarItem className="hidden md:flex gap-2">
-              <Avatar isBordered className="cursor-pointer" as={Link} onClick={handleSignOut} src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"} />
-              {/* <Button
-                onClick={handleSignOut}
-                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-              >
-                Log Out
-              </Button> */}
+                <Dropdown showArrow>
+                    <DropdownTrigger>
+                        <Avatar isBordered className="cursor-pointer" as={Link} src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"} />
+                    </DropdownTrigger>
+                    <DropdownMenu variant="flat">
+                        <DropdownSection title={`Hi, ${user.displayName}`} showDivider>
+                            <DropdownItem
+                                key="profile"
+                                className="text-center"
+                            >
+                                Profile
+                            </DropdownItem>
+                            <DropdownItem
+                                key="history"
+                                className="text-center"
+                            >
+                                History
+                            </DropdownItem>
+                        </DropdownSection>
+                        <DropdownSection>
+                            <DropdownItem
+                                key="logout"
+                                onClick={handleSignOut}
+                                className="text-center"
+                            >
+                                Log Out 
+                            </DropdownItem>
+                        </DropdownSection>
+
+                    </DropdownMenu>
+                </Dropdown>
             </NavbarItem>
           )
         }
@@ -154,3 +185,5 @@ export const Navbar = () => {
     </NextUINavbar>
   );
 };
+
+export default Navbar;
