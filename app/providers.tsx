@@ -5,6 +5,7 @@ import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
+import { UserProvider } from "@/contexts/userContext";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -16,7 +17,9 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <NextUIProvider navigate={router.push}>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      <UserProvider>
+        <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      </UserProvider>
     </NextUIProvider>
   );
 }

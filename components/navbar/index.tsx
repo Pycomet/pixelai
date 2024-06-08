@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -30,23 +29,14 @@ import {
   HeartFilledIcon,
   Logo,
 } from "@/components/icons";
-import { signInWithGoogle, signOut, onAuthStateChanged } from "@/lib/firebase/auth";
-import { User } from "firebase/auth";
+import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { Avatar } from "@nextui-org/avatar";
+import { useUser } from "@/contexts/userContext";
 
 
 export const Navbar = () => {
 
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-      const unsubscribe = onAuthStateChanged((user) => {
-          setUser(user);
-      });
-
-      // Cleanup subscription on unmount
-      return () => unsubscribe();
-  }, []);
+  const { user, loading } = useUser();
 
   const handleSignIn = async () => {
       await signInWithGoogle();
@@ -100,6 +90,7 @@ export const Navbar = () => {
             <Button
               onClick={handleSignIn}
               className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+              isLoading={loading}
             >
               Sign In
             </Button>
