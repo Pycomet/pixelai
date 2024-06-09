@@ -28,4 +28,9 @@ export const siteConfig = {
     docs: "https://github.com/pycomet",
     sponsor: "https://patreon.com/jrgarciadev", // TODO: Add Patreon Account
   },
+  searchTopics: [
+    "How to make your first $1000",
+    "The #1 secret to a desirable outcome",
+    "The hidden benefits of keeping a routing"
+  ]
 };

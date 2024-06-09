@@ -17,21 +17,7 @@ module.exports = {
   },
   darkMode: "class",
   plugins: [nextui({
-    prefix: "pixelai",
-    themes: {
-      light: {
-        // colors: {
-        //   primary: "",
-        //   secondary: ""
-        // }
-      },
-      dark: {
-        // colors: {
-        //   primary: "",
-        //   secondary: ""
-        // }
-      }
-    }
+    prefix: "pixelai"
   })],
 };
 
