@@ -9,7 +9,8 @@ const nextConfig = {
         NEXT_FIREBASE_SENDER_ID: process.env.NEXT_FIREBASE_SENDER_ID,
         NEXT_FIREBASE_APP_ID: process.env.NEXT_FIREBASE_APP_ID,
         NEXT_FIREBASE_MEASUREMENT_ID: process.env.NEXT_FIREBASE_MEASUREMENT_ID
-    }
+    },
+    images: { unoptimized: true }
 };
 
 module.exports = nextConfig;

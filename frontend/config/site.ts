@@ -2,7 +2,7 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "PixelAI - AI Thumbnail Generator",
-  description: "Automatically create engaging thumbnails for online content using advanced language models and image processing. Streamlines the thumbnail creation workflow and enhances visual presentation to boost engagement.",
+  description: "Using AI to create engaging thumbnails for online content using advanced language models and image processing. Streamlines the thumbnail creation workflow and enhances visual presentation to boost engagement.",
   navItems: [
     // {
     //   label: "Home",

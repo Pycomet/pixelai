@@ -9,6 +9,7 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
+import Image from "next/image";
 import {
     Dropdown,
     DropdownTrigger,
@@ -27,11 +28,12 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import {
   GithubIcon,
   HeartFilledIcon,
-  Logo,
 } from "@/components/icons";
 import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { Avatar } from "@nextui-org/avatar";
 import { useUser } from "@/contexts/userContext";
+import LogoImage from "@/assets/logo.png";
+import { AnimatedDiv } from "../motion";
 
 
 export const Navbar = () => {
@@ -46,14 +48,20 @@ export const Navbar = () => {
       await signOut();
   };
 
-
   return (
     <NextUINavbar maxWidth="2xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">PixelAI</p>
+            <AnimatedDiv>
+              <Image
+                src={LogoImage.src}
+                width={200}
+                height={200}
+                alt="PixelAI"
+                className="justify-start mt-2"
+              />
+            </AnimatedDiv>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
