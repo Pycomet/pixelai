@@ -1,7 +1,12 @@
 "use client";
 import { AnimatedDiv } from "../motion";
 import Slider from "react-slick";
+import Image from "next/image";
 
+// Import Image
+import PNG1 from "../../assets/thumbnails/test1.png";
+import PNG3 from "@/assets/thumbnails/test3.png";
+import PNG4 from "@/assets/thumbnails/test4.png";
 
 export const ImageSlider: React.FC = () => {
     
@@ -14,27 +19,26 @@ export const ImageSlider: React.FC = () => {
         speed: 500
     };
 
+
+    const availableImages: string[] = [PNG1.src, PNG3.src, PNG4.src];
+
+
     return (
-        <AnimatedDiv>
+        <AnimatedDiv isOpen={true} className="h-auto">
         <Slider {...settings}>
-            <div>
-            <h3>1</h3>
-            </div>
-            <div>
-            <h3>2</h3>
-            </div>
-            <div>
-            <h3>3</h3>
-            </div>
-            <div>
-            <h3>4</h3>
-            </div>
-            <div>
-            <h3>5</h3>
-            </div>
-            <div>
-            <h3>6</h3>
-            </div>
+            {availableImages.map((src: string, index: number) => {
+                return (
+                    // <AnimatedDiv key={index}>
+                        <Image
+                            key={index}
+                            src={src}
+                            width={900}
+                            height={900}
+                            alt={`image_${index}`}
+                        ></Image>
+                    // </AnimatedDiv>
+                );
+            })}
         </Slider>
         </AnimatedDiv>
     );

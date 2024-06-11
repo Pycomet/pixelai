@@ -178,7 +178,7 @@ export const SearchIcon = (props: IconSvgProps) => (
 
 export const RightArrowIcon = (props: IconSvgProps) => (
   <svg width="800px" height="800px" viewBox="0 0 24.000001 24.000001" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <filter id="a" color-interpolation-filters="sRGB" height="1.798065" width="1.31919" x="-.159595" y="-.399032">
+    <filter id="a" colorInterpolationFilters="sRGB" height="1.798065" width="1.31919" x="-.159595" y="-.399032">
       <feGaussianBlur stdDeviation="1.3302515" />
     </filter>
     <g transform="matrix(.90944794 0 0 .90944794 -259.0175 -817.2446)">
