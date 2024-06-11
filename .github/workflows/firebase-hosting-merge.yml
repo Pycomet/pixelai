@@ -29,8 +29,9 @@ jobs:
           echo "NEXT_FIREBASE_SENDER_ID=$NEXT_FIREBASE_SENDER_ID"
           echo "NEXT_FIREBASE_APP_ID=$NEXT_FIREBASE_APP_ID"
           echo "NEXT_FIREBASE_MEASUREMENT_ID=$NEXT_FIREBASE_MEASUREMENT_ID"
-          
-      - run: cd frontend && npm install && npm run build
+      
+      - name: Run frontend build 
+        run: npm install && npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

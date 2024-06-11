@@ -28,7 +28,7 @@ jobs:
           echo "NEXT_FIREBASE_APP_ID=$NEXT_FIREBASE_APP_ID"
           echo "NEXT_FIREBASE_MEASUREMENT_ID=$NEXT_FIREBASE_MEASUREMENT_ID"
           
-      - run: cd frontend && npm install && npm run build
+      - run: npm install && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
