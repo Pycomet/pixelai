@@ -1,0 +1,6 @@
+LIST OF TASKS TO BE DONE UNDER THIS PROJECT
+
+[ ] Add Toast Message Queue
+[ ] Add Modular Form Rules 
+[ ] Sign In & Sign Up Pages
+[ ] Move Authentication layer To Firebase Fully

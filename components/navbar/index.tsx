@@ -29,27 +29,25 @@ import {
   GithubIcon,
   HeartFilledIcon,
 } from "@/components/icons";
-import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { Avatar } from "@nextui-org/avatar";
-import { useUser } from "@/contexts/userContext";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  SignOutButton
+} from "@clerk/nextjs";
+
+import { useUser } from "@clerk/nextjs";
 import LogoImage from "@/assets/logo.png";
 import { AnimatedDiv } from "../motion";
 
 
 export const Navbar = () => {
 
-  const { user, loading } = useUser();
-
-  const handleSignIn = async () => {
-      await signInWithGoogle();
-  };
-
-  const handleSignOut = async () => {
-      await signOut();
-  };
+  const { isLoaded, user } = useUser();
 
   return (
-    <NextUINavbar maxWidth="2xl" position="sticky">
+    <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -93,51 +91,50 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         
-        {!user ? (
-          <NavbarItem className="hidden md:flex gap-2">
-            <Button
-              onClick={handleSignIn}
-              className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-              isLoading={loading}
-            >
-              Sign In
-            </Button>
-          </NavbarItem>) : (
+          <SignedOut>
+            <NavbarItem className="hidden md:flex gap-2">
+              <Button
+                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+                isLoading={!isLoaded}
+              >
+                <SignInButton />
+              </Button>
+            </NavbarItem>
+          </ SignedOut>
+          <SignedIn>
             <NavbarItem className="hidden md:flex gap-2">
                 <Dropdown showArrow>
                     <DropdownTrigger>
-                        <Avatar isBordered className="cursor-pointer" as={Link} src={"https://i.pravatar.cc/150?u=a042581f4e29026024d"} />
+                        <Avatar isBordered className="cursor-pointer" as={Link} src={user?.imageUrl} />
                     </DropdownTrigger>
                     <DropdownMenu variant="flat">
-                        <DropdownSection title={`Hi, ${user.displayName}`} showDivider>
+                        <DropdownSection title={`Hi, ${user?.fullName}`} showDivider>
                             <DropdownItem
                                 key="profile"
-                                className="text-center"
+                                className="text-right"
                             >
                                 Profile
                             </DropdownItem>
                             <DropdownItem
                                 key="history"
-                                className="text-center"
+                                className="text-right"
                             >
-                                History
+                                Settings
                             </DropdownItem>
                         </DropdownSection>
                         <DropdownSection>
                             <DropdownItem
                                 key="logout"
-                                onClick={handleSignOut}
-                                className="text-center"
+                                className="text-right"
                             >
-                                Log Out 
+                                <SignOutButton /> 
                             </DropdownItem>
                         </DropdownSection>
 
                     </DropdownMenu>
                 </Dropdown>
             </NavbarItem>
-          )
-        }
+          </SignedIn>
         <NavbarItem className="hidden md:flex">
           <Button
             isExternal

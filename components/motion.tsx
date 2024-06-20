@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface MotionProps {
     children?: ReactNode
@@ -41,7 +42,9 @@ export const AnimatedDiv: React.FC<MotionProps> = ({ children, isOpen = true, cl
 };
 
 interface AnimatedListProps extends MotionProps {
-    items: ReactNode[];
+    items: ReactNode[] | [];
+    width?: number;
+    height?: number;
 }
 
 
@@ -61,6 +64,39 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({ items, isOpen = true
                             variants={listVariants}
                         >
                             {item}
+                        </motion.div>
+                    ))
+                }
+            </motion.section>
+        </AnimatePresence>
+    );
+};
+
+
+
+export const AnimatedImages: React.FC<AnimatedListProps> = ({ items, isOpen = true, className = "", width = 300, height = 300 }) => {
+    return (
+        <AnimatePresence>
+            <motion.section className={className}>
+                
+                {isOpen &&
+                    items.map((item, index: number) => (
+                        <motion.div
+                            key={index}
+                            custom={index}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            variants={listVariants}
+                        >
+                            <Image
+                                key={index}
+                                src={item as string}
+                                width={width}
+                                height={height}
+                                className="cursor-pointer rounded-md h-[20vh] hover:scale-110 transition-transform duration-300"
+                                alt={`image_${index}`}
+                            ></Image>
                         </motion.div>
                     ))
                 }

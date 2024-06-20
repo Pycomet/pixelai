@@ -9,7 +9,7 @@ export default function Home() {
   
   return (
     <section>
-      <section className="flex flex-col md:flex-row items-center space-between justify-between gap-2 md:gap-[2vw] lg:gap-[5vw] py-6 md:py-10">
+      <section className="flex flex-col md:flex-row items-center space-between justify-between gap-2 md:gap-[2vw] lg:gap-[4vw] py-6 md:py-10">
         <AnimatedDiv className="inline-block md:w-1/2 text-left justify-center ">
           <h1 className={title()}>Elevate Your Visual Storytelling with&nbsp;</h1>
           <br />
@@ -30,10 +30,10 @@ export default function Home() {
 
 
         <SearchComponent />
-
       </section>
 
-      <section className="flex">
+      <section className="flex flex-col">
+        <p className={`${title({ size: "xs" })} pb-2`}>Popular picks</p>
         <ImageSlider />
       </section>
 
