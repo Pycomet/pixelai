@@ -1,13 +1,13 @@
 "use client";
-import { React } from "react";
+import { useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
 import { useUser } from "@/contexts/userContext";
+import { useRouter } from "next/navigation";
 import {
     MailIcon,
     LockIcon,
     GoogleIcon,
-    YoutubeIcon,
     GithubIcon
 } from "@/components/icons";
 import { button } from "@/components/primitives";
@@ -19,6 +19,13 @@ import {
 export const LoginComponent = () => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const { user, loading } = useUser();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (user) {
+            router.push("/dsahboard");
+        }
+    }, [router, user]);
 
     return (
         <AnimatedDiv>

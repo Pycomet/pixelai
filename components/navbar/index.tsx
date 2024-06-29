@@ -34,7 +34,7 @@ import { Avatar } from "@nextui-org/avatar";
 
 import { signOut } from "@/lib/firebase/auth";	
 import { useUser } from "@/contexts/userContext";
-import LogoImage from "@/assets/logo.png";
+import LogoImage from "@/assets/logo_transparent.png";
 import { AnimatedDiv } from "../motion";
 
 
