@@ -2,6 +2,7 @@
 import { useUser } from "@/contexts/userContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import LoginComponent from "../forms/login";
 
 
 interface AuthWrapperProps {
@@ -22,6 +23,7 @@ export const AuthWrapper = ({ children }: AuthWrapperProps) => {
 
     return (
         <section>
+            <LoginComponent />
         {children}
         </section>
     );
