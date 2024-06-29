@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { UserProvider } from "@/contexts/userContext";
+import { MessageProvider } from "@/contexts/messageContext";
 
 
 export interface ProvidersProps {
@@ -18,9 +19,11 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <NextUIProvider navigate={router.push}>
-        <UserProvider>
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-        </UserProvider>
+        <MessageProvider>
+          <UserProvider>
+            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+          </UserProvider>
+        </MessageProvider>
     </NextUIProvider>
   );
 }

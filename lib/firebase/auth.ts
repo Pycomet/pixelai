@@ -45,7 +45,7 @@ export async function signInWithGithub(): Promise<void> {
     }
 }
 
-export async function signInWithPassword(email: string, password: string): Promise<User | null> {
+export const signInWithPassword = async (email: string, password: string): Promise<User | null> => {
     try {
         const response = await signInWithEmailAndPassword(auth, email, password);
         
@@ -59,7 +59,7 @@ export async function signInWithPassword(email: string, password: string): Promi
         console.error("Error signing in with Google", error);
         return null;
     }
-}
+};
 
 
 export async function signOut(): Promise<void> {

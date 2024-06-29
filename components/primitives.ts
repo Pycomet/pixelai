@@ -73,3 +73,7 @@ export const button = tv({
     color: "gradient"
   }
 });
+
+export const errorMessage = tv({
+  base: "text-xs lg:text-sm text-[#FF0000] pl-[1em] text-left"
+});

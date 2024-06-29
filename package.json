@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@firebase/firestore": "^4.6.3",
+		"@hookform/resolvers": "^3.6.0",
 		"@nextui-org/button": "^2.0.32",
 		"@nextui-org/code": "^2.0.28",
 		"@nextui-org/input": "^2.2.0",
@@ -52,10 +53,12 @@
 		"postcss": "8.4.38",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
+		"react-hook-form": "^7.52.0",
 		"react-slick": "^0.30.2",
 		"sharp": "^0.33.4",
 		"tailwind-variants": "^0.1.20",
 		"tailwindcss": "3.4.3",
-		"typescript": "5.0.4"
+		"typescript": "5.0.4",
+		"yup": "^1.4.0"
 	}
 }
