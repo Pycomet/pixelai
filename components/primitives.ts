@@ -55,7 +55,7 @@ export const subtitle = tv({
 
 
 export const button = tv({
-  base: "text-xs md:test-sm lg:text-md text-default-600 font-normal hover:opacity-50",
+  base: "text-xs md:test-sm lg:text-md text-default-600 font-normal hover:opacity-50 ",
   variants: {
     color: {
       gradient: "bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500",

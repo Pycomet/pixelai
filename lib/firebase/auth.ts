@@ -1,6 +1,6 @@
 // auth.ts
 import { auth } from "@/lib/firebase/firebaseConfig"; // Adjust the path to your config file
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged as _onAuthStateChanged } from "firebase/auth";
+import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged as _onAuthStateChanged } from "firebase/auth";
 import { User } from "firebase/auth";
 
 
@@ -27,6 +27,16 @@ export function onAuthStateChanged(cb: AuthStateChangedCallback): () => void {
 
 export async function signInWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
+
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        console.error("Error signing in with Google", error);
+    }
+}
+
+export async function signInWithGithub(): Promise<void> {
+    const provider = new GithubAuthProvider();
 
     try {
         await signInWithPopup(auth, provider);

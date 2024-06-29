@@ -29,22 +29,18 @@ import {
   GithubIcon,
   HeartFilledIcon,
 } from "@/components/icons";
+import { LoginComponent } from "@/components/forms/login";
 import { Avatar } from "@nextui-org/avatar";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  SignOutButton
-} from "@clerk/nextjs";
 
-import { useUser } from "@clerk/nextjs";
+import { signOut } from "@/lib/firebase/auth";	
+import { useUser } from "@/contexts/userContext";
 import LogoImage from "@/assets/logo.png";
 import { AnimatedDiv } from "../motion";
 
 
 export const Navbar = () => {
 
-  const { isLoaded, user } = useUser();
+  const { user } = useUser();
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -91,24 +87,20 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         
-          <SignedOut>
-            <NavbarItem className="hidden md:flex gap-2">
-              <Button
-                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-                isLoading={!isLoaded}
-              >
-                <SignInButton />
-              </Button>
-            </NavbarItem>
-          </ SignedOut>
-          <SignedIn>
+          {!user ? (
+            <>
+              <NavbarItem className="hidden md:flex gap-2">
+                <LoginComponent  />
+              </NavbarItem>
+            </>
+          ): (
             <NavbarItem className="hidden md:flex gap-2">
                 <Dropdown showArrow>
                     <DropdownTrigger>
-                        <Avatar isBordered className="cursor-pointer" as={Link} src={user?.imageUrl} />
+                        <Avatar isBordered className="cursor-pointer" as={Link} src={user?.photoURL} />
                     </DropdownTrigger>
                     <DropdownMenu variant="flat">
-                        <DropdownSection title={`Hi, ${user?.fullName}`} showDivider>
+                        <DropdownSection title={`Hi, ${user?.displayName}`} showDivider>
                             <DropdownItem
                                 key="profile"
                                 className="text-right"
@@ -126,15 +118,16 @@ export const Navbar = () => {
                             <DropdownItem
                                 key="logout"
                                 className="text-right"
+                                onClick={() => signOut()}
                             >
-                                <SignOutButton /> 
+                                Sign out
                             </DropdownItem>
                         </DropdownSection>
 
                     </DropdownMenu>
                 </Dropdown>
             </NavbarItem>
-          </SignedIn>
+          )}
         <NavbarItem className="hidden md:flex">
           <Button
             isExternal
@@ -143,9 +136,7 @@ export const Navbar = () => {
             href={siteConfig.links.sponsor}
             startContent={<HeartFilledIcon className="text-danger" />}
             variant="flat"
-          >
-            Sponsor
-          </Button>
+          />
         </NavbarItem>
       </NavbarContent>
 
