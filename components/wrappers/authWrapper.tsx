@@ -23,7 +23,7 @@ export const AuthWrapper = ({ children }: AuthWrapperProps) => {
 
     return (
         <section>
-            <LoginComponent />
+        <LoginComponent />
         {children}
         </section>
     );
