@@ -1,9 +1,7 @@
 "use client";
-import { useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
 import { useUser } from "@/contexts/userContext";
-import { useRouter } from "next/navigation";
 import {
     MailIcon,
     LockIcon,
@@ -15,31 +13,26 @@ import {
     signInWithGoogle,
     signInWithGithub
 } from "@/lib/firebase/auth";
+import { useState } from "react";
+
+
 
 export const LoginComponent = () => {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const { user, loading } = useUser();
-    const router = useRouter();
+    const { showLogin, toggleLogin } = useUser();
 
-    useEffect(() => {
-        if (user) {
-            router.push("/dsahboard");
-        }
-    }, [router, user]);
+
+    const [ data, setData ] = useState({
+        email: "",
+        password: "",
+        remember: false
+    });
 
     return (
         <AnimatedDiv>
-              <Button
-                onPress={onOpen}
-                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-                isLoading={loading}
-              >
-                Sign In
-              </Button>
 
             <Modal 
-                isOpen={isOpen} 
-                onOpenChange={onOpenChange}
+                isOpen={showLogin} 
+                onOpenChange={() => toggleLogin()}
                 placement="top-center"
                 backdrop="blur"
                 motionProps={{
@@ -79,6 +72,9 @@ export const LoginComponent = () => {
                         label="Email"
                         placeholder="Enter your email"
                         variant="bordered"
+                        value={data.email}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onChange={(e: any) => setData({ ...data, email: e.target.value})}
                         />
                         <Input
                         endContent={
@@ -88,12 +84,16 @@ export const LoginComponent = () => {
                         placeholder="Enter your password"
                         type="password"
                         variant="bordered"
+                        value={data.password}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onChange={(e: any) => setData({ ...data, password: e.target.value})}
                         />
                         <div className="flex py-2 px-1 justify-between">
                         <Checkbox
                             classNames={{
                             label: "text-small",
                             }}
+                            onChange={() => setData({ ...data, remember: !data.remember })}
                         >
                             Remember me
                         </Checkbox>
@@ -101,13 +101,13 @@ export const LoginComponent = () => {
                             Forgot password?
                         </Link>
                         </div>
-                        <Button className={button({ hideOnMobile: true })} onPress={onClose}>
-                            LOGIN
+                        <Button className={`${button({ hideOnMobile: true })} uppercase`} onPress={onClose}>
+                            Login
                         </Button>
                         <hr />
                         <p className="mt-2 font-normal text-xs text-center">Or Sign In Using</p>
                         <div className="flex flex-row justify-center gap-2">
-                            <GoogleIcon size={30} className="cursor-pointer" onClick={() => signInWithGoogle()}/>
+                            <GoogleIcon size={30} className="cursor-pointer" onClick={() => signInWithGoogle()} width={24} height={24}/>
                             <GithubIcon size={30} className="cursor-pointer"
                             onClick={() => signInWithGithub()}
                             />

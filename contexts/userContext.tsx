@@ -5,6 +5,8 @@ import { User } from "firebase/auth";
 interface UserContextProps {
     user: User | null;
     loading: boolean;
+    showLogin: boolean;
+    toggleLogin: () => void
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -16,6 +18,7 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [showLogin, setShowLogin] = useState<boolean>(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged((user) => {
@@ -26,8 +29,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         return () => unsubscribe();
     }, []);
 
+    const toggleLogin = () => {
+        // Toggle showing of the login form
+        setShowLogin(!showLogin);
+    }
+
     return (
-        <UserContext.Provider value={{ user, loading }}>
+        <UserContext.Provider value={{ user, loading, showLogin, toggleLogin }}>
             {children}
         </UserContext.Provider>
     );

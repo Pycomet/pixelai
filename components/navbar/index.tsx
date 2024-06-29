@@ -40,7 +40,7 @@ import { AnimatedDiv } from "../motion";
 
 export const Navbar = () => {
 
-  const { user } = useUser();
+  const { user, toggleLogin, loading } = useUser();
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -91,6 +91,13 @@ export const Navbar = () => {
             <>
               <NavbarItem className="hidden md:flex gap-2">
                 <LoginComponent  />
+                <Button
+                  onPress={() => toggleLogin()}
+                  className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+                  isLoading={loading}
+                >
+                  Sign In
+                </Button>
               </NavbarItem>
             </>
           ): (
