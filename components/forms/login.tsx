@@ -1,5 +1,5 @@
 "use client";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
 import { useUser } from "@/contexts/userContext";
 import {

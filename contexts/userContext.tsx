@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const toggleLogin = () => {
         // Toggle showing of the login form
         setShowLogin(!showLogin);
-    }
+    };
 
     return (
         <UserContext.Provider value={{ user, loading, showLogin, toggleLogin }}>

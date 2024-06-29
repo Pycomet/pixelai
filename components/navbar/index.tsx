@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -102,7 +101,7 @@ export const Navbar = () => {
             <NavbarItem className="hidden md:flex gap-2">
                 <Dropdown showArrow>
                     <DropdownTrigger>
-                        <Avatar isBordered className="cursor-pointer" as={Link} src={user?.photoURL} />
+                        <Avatar isBordered className="cursor-pointer" as={Link} src={user?.photoURL as string} />
                     </DropdownTrigger>
                     <DropdownMenu variant="flat">
                         <DropdownSection title={`Hi, ${user?.displayName}`} showDivider>

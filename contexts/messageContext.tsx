@@ -70,4 +70,4 @@ export const useMessage = (): MessageContextProps => {
         throw new Error("useMessage must be used within a MessageProvider");
     }
     return context;
-}
+};

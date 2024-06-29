@@ -1,5 +1,4 @@
 "use client";
-import { React } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
 import { useUser } from "@/contexts/userContext";
@@ -7,7 +6,6 @@ import {
     MailIcon,
     LockIcon,
     GoogleIcon,
-    YoutubeIcon,
     GithubIcon
 } from "@/components/icons";
 import { button } from "@/components/primitives";
@@ -18,8 +16,7 @@ import {
 
 export const RegisterComponent = () => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const { user, loading } = useUser();
-
+    const { loading } = useUser();
     return (
         <AnimatedDiv>
               <Button
@@ -116,4 +113,4 @@ export const RegisterComponent = () => {
     );
 };
 
-export default RegisterComponent;;
+export default RegisterComponent;
