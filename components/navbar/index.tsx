@@ -29,7 +29,6 @@ import {
   GithubIcon,
   HeartFilledIcon,
 } from "@/components/icons";
-import { LoginComponent } from "@/components/forms/login";
 import { Avatar } from "@nextui-org/avatar";
 
 import { signOut } from "@/lib/firebase/auth";	
@@ -90,7 +89,6 @@ export const Navbar = () => {
           {!user ? (
             <>
               <NavbarItem className="hidden md:flex gap-2">
-                <LoginComponent  />
                 <Button
                   onPress={() => toggleLogin()}
                   className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"

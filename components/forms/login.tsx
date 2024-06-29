@@ -20,12 +20,13 @@ import { useState } from "react";
 export const LoginComponent = () => {
     const { showLogin, toggleLogin } = useUser();
 
-
     const [ data, setData ] = useState({
         email: "",
         password: "",
         remember: false
     });
+
+    // const handleFormSubmit = () => {};
 
     return (
         <AnimatedDiv>
