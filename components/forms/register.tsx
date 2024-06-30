@@ -1,116 +1,190 @@
 "use client";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react";
+import { useCallback, useState } from "react";
+import { Button, Checkbox, Input } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
-import { useUser } from "@/contexts/userContext";
 import {
-    MailIcon,
-    LockIcon,
-    GoogleIcon,
-    GithubIcon
+  MailIcon,
+  LockIcon,
+  GoogleIcon,
+  GithubIcon,
+  UnlockIcon,
 } from "@/components/icons";
-import { button } from "@/components/primitives";
-import {
-    signInWithGoogle,
-    signInWithGithub
-} from "@/lib/firebase/auth";
+import { signInWithGoogle, signInWithGithub } from "@/lib/firebase/auth";
+import { button, errorMessage, title } from "@/components/primitives";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+const registerFormSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be less than 50 characters"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Must be a valid email"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(
+      /[@$!%*?&#]/,
+      "Password must contain at least one special character"
+    ),
+  confirmPassword: yup
+    .string()
+    .required("Confirm password is required")
+    .oneOf([yup.ref("password")], "Passwords must match"),
+  subscribe: yup.boolean().default(false),
+});
+
+type RegisterFormData = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  subscribe: boolean;
+};
 
 export const RegisterComponent = () => {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const { loading } = useUser();
-    return (
-        <AnimatedDiv>
-              <Button
-                onPress={onOpen}
-                className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
-                isLoading={loading}
-              >
-                Sign Up
-              </Button>
+  // const { message } = useMessage();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  // const router = useRouter();
 
-            <Modal 
-                isOpen={isOpen} 
-                onOpenChange={onOpenChange}
-                placement="top-center"
-                backdrop="blur"
-                motionProps={{
-                    variants: {
-                      enter: {
-                        y: 0,
-                        opacity: 1,
-                        transition: {
-                          duration: 0.3,
-                          ease: "easeOut",
-                        },
-                      },
-                      exit: {
-                        y: -20,
-                        opacity: 0,
-                        transition: {
-                          duration: 0.2,
-                          ease: "easeIn",
-                        },
-                      },
-                    }
-                }}
-            >
-                <ModalContent>
-                {(onClose) => (
-                    <>
-                    <ModalHeader className="flex flex-col gap-1">
-                        <h1 className="font-black">Login</h1>
-                        <p className="font-normal text-xs">Don&apos;t have an account? <Link size="sm" className="cursor-pointer text-xs">Sign Up</Link></p>
-                    </ModalHeader>
-                    <ModalBody>
-                        <Input
-                        autoFocus
-                        endContent={
-                            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                        }
-                        label="Email"
-                        placeholder="Enter your email"
-                        variant="bordered"
-                        />
-                        <Input
-                        endContent={
-                            <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                        }
-                        label="Password"
-                        placeholder="Enter your password"
-                        type="password"
-                        variant="bordered"
-                        />
-                        <div className="flex py-2 px-1 justify-between">
-                        <Checkbox
-                            classNames={{
-                            label: "text-small",
-                            }}
-                        >
-                            Remember me
-                        </Checkbox>
-                        <Link color="primary" href="#" size="sm" className="font-normal text-xs">
-                            Forgot password?
-                        </Link>
-                        </div>
-                        <Button className={button({ hideOnMobile: true })} onPress={onClose}>
-                            LOGIN
-                        </Button>
-                        <hr />
-                        <p className="mt-2 font-normal text-xs text-center">Or Sign In Using</p>
-                        <div className="flex flex-row justify-center gap-2">
-                            <GoogleIcon size={30} className="cursor-pointer" onClick={() => signInWithGoogle()}/>
-                            <GithubIcon size={30} className="cursor-pointer"
-                            onClick={() => signInWithGithub()}
-                            />
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                    </ModalFooter>
-                    </>
-                )}
-                </ModalContent>
-            </Modal>
-        </AnimatedDiv>
-    );
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: yupResolver(registerFormSchema),
+  });
+
+  const onSubmit = async (data: RegisterFormData) => {
+    setLoading(true);
+
+    console.log(data);
+
+    setTimeout(() => {
+      setLoading(false);
+      reset();
+    }, 2000);
+  };
+
+  const PasswordIcon = useCallback(() => {
+    if (showPassword) {
+      return (
+        <UnlockIcon
+          onClick={() => setShowPassword(!showPassword)}
+          className="hover:cursor-pointer text-2xl text-default-400 pointer-events-none flex-shrink-0"
+        />
+      );
+    } else {
+      return (
+        <LockIcon
+          onClick={() => setShowPassword(!showPassword)}
+          className="hover:cursor-pointer text-2xl text-default-400 pointer-events-none flex-shrink-0"
+        />
+      );
+    }
+  }, [showPassword]);
+
+  return (
+    <AnimatedDiv className="w-2/3 md:w-[30em] gap-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <h1 className={`${title({ size: "xs" })} text-center`}>
+          Create A New Account
+        </h1>
+        <br />
+        <Input
+          {...register("name", { required: true })}
+          autoFocus
+          label="Name"
+          placeholder="Enter your full name"
+          variant="bordered"
+        />
+        {errors.name && <p className={errorMessage()}>{errors.name.message}</p>}
+        <Input
+          {...register("email", { required: true })}
+          autoFocus
+          endContent={
+            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          label="Email"
+          placeholder="Enter your email"
+          variant="bordered"
+        />
+        {errors.email && (
+          <p className={errorMessage()}>{errors.email.message}</p>
+        )}
+        <Input
+          {...register("password", { required: true })}
+          endContent={<PasswordIcon />}
+          label="Password"
+          placeholder="Enter your password"
+          type={showPassword ? "text" : "password"}
+          variant="bordered"
+        />
+        {errors.password && (
+          <p className={errorMessage()}>{errors.password.message}</p>
+        )}
+        <Input
+          {...register("confirmPassword", { required: true })}
+          endContent={<PasswordIcon />}
+          label="Confirm Password"
+          placeholder="Enter your password again"
+          type={showPassword ? "text" : "password"}
+          variant="bordered"
+        />
+        {errors.confirmPassword && (
+          <p className={errorMessage()}>{errors.confirmPassword.message}</p>
+        )}
+        <div className="flex flex-col py-2 px-1 gap-2">
+          <Checkbox
+            classNames={{
+              label: "text-small",
+            }}
+          >
+            I agree to the terms and conditions
+          </Checkbox>
+          <Checkbox
+            {...register("subscribe", { required: true })}
+            classNames={{
+              label: "text-small",
+            }}
+          >
+            Subscribe to get updates
+          </Checkbox>
+        </div>
+        <Button
+          isLoading={loading}
+          className={`${button({ hideOnMobile: true })} uppercase justify-center w-auto px-[5em] mx-auto`}
+          type="submit"
+        >
+          Register
+        </Button>
+        <p className="mt-2 font-normal text-xs text-center">Or Sign Up Using</p>
+        <div className="flex flex-row justify-center gap-2">
+          <GoogleIcon
+            size={50}
+            className="cursor-pointer"
+            onClick={() => signInWithGoogle()}
+          />
+          <GithubIcon
+            size={50}
+            className="cursor-pointer"
+            onClick={() => signInWithGithub()}
+          />
+        </div>
+      </form>
+    </AnimatedDiv>
+  );
 };
 
 export default RegisterComponent;

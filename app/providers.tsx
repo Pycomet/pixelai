@@ -7,7 +7,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { UserProvider } from "@/contexts/userContext";
 import { MessageProvider } from "@/contexts/messageContext";
-
+import AuthWrapper from "@/components/wrappers/authWrapper";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -19,11 +19,13 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <NextUIProvider navigate={router.push}>
-        <MessageProvider>
-          <UserProvider>
+      <MessageProvider>
+        <UserProvider>
+          <AuthWrapper>
             <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-          </UserProvider>
-        </MessageProvider>
+          </AuthWrapper>
+        </UserProvider>
+      </MessageProvider>
     </NextUIProvider>
   );
 }

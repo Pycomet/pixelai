@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+		"format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,scss,md}\""
 	},
 	"dependencies": {
 		"@firebase/firestore": "^4.6.3",
@@ -36,7 +37,7 @@
 		"dotenv": "^16.4.5",
 		"eslint": "^8.56.0",
 		"eslint-config-next": "14.2.1",
-		"eslint-config-prettier": "^8.2.0",
+		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.4.1",
 		"eslint-plugin-node": "^11.1.0",
@@ -51,6 +52,7 @@
 		"next": "14.2.3",
 		"next-themes": "^0.2.1",
 		"postcss": "8.4.38",
+		"prettier": "^3.3.2",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"react-hook-form": "^7.52.0",

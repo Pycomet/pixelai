@@ -3,13 +3,19 @@ import * as React from "react";
 import { IconSvgProps } from "@/types";
 
 export const Logo: React.FC<IconSvgProps> = () => (
-  <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-  width="120.000000pt" height="120.000000pt" viewBox="0 0 120.000000 120.000000"
-  preserveAspectRatio="xMidYMid meet">
-
-    <g transform="translate(0.000000,1200.000000) scale(0.100000,-0.100000)"
-    fill="currentColor" stroke="none">
-    </g>
+  <svg
+    version="1.0"
+    xmlns="http://www.w3.org/2000/svg"
+    width="120.000000pt"
+    height="120.000000pt"
+    viewBox="0 0 120.000000 120.000000"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <g
+      transform="translate(0.000000,1200.000000) scale(0.100000,-0.100000)"
+      fill="currentColor"
+      stroke="none"
+    ></g>
   </svg>
 );
 
@@ -175,21 +181,42 @@ export const SearchIcon = (props: IconSvgProps) => (
   </svg>
 );
 
-
 export const RightArrowIcon = (props: IconSvgProps) => (
-  <svg width="800px" height="800px" viewBox="0 0 24.000001 24.000001" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <filter id="a" colorInterpolationFilters="sRGB" height="1.798065" width="1.31919" x="-.159595" y="-.399032">
+  <svg
+    width="800px"
+    height="800px"
+    viewBox="0 0 24.000001 24.000001"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <filter
+      id="a"
+      colorInterpolationFilters="sRGB"
+      height="1.798065"
+      width="1.31919"
+      x="-.159595"
+      y="-.399032"
+    >
       <feGaussianBlur stdDeviation="1.3302515" />
     </filter>
     <g transform="matrix(.90944794 0 0 .90944794 -259.0175 -817.2446)">
-      <path d="m300.84375 908.875c-.35929.0633-.67275.33918-.78125.6875l-.625 1.8125h-10.4375c-.52358.00005-.99995.47642-1 1v1c.00005.52358.47642.99995 1 1h10.4375l.625 1.8125c.17584.53611.8642.83335 1.375.59375l6-3c.36721-.17625.60257-.59466.5625-1 .001-.0312.001-.0625 0-.0937-.0597-.31022-.27572-.58621-.5625-.71875l-6-3c-.1822-.0907-.39248-.12385-.59375-.0937z" filter="url(#a)" opacity=".2" />
+      <path
+        d="m300.84375 908.875c-.35929.0633-.67275.33918-.78125.6875l-.625 1.8125h-10.4375c-.52358.00005-.99995.47642-1 1v1c.00005.52358.47642.99995 1 1h10.4375l.625 1.8125c.17584.53611.8642.83335 1.375.59375l6-3c.36721-.17625.60257-.59466.5625-1 .001-.0312.001-.0625 0-.0937-.0597-.31022-.27572-.58621-.5625-.71875l-6-3c-.1822-.0907-.39248-.12385-.59375-.0937z"
+        filter="url(#a)"
+        opacity=".2"
+      />
       <path d="m308 911.67377a1.0001 1.0001 0 0 0 -.5625-.71875l-6-3a1.0001 1.0001 0 0 0 -1.375.59375l-.625 1.8125h-10.4375a1.0001 1.0001 0 0 0 -1 1v1a1.0001 1.0001 0 0 0 1 1h10.4375l.625 1.8125a1.0001 1.0001 0 0 0 1.375.59375l6-3a1.0001 1.0001 0 0 0 .5625-1 1.0001 1.0001 0 0 0 0-.0937z" />
-      <path d="m307 911.86127-6-3-.84375 2.5h-11.15625v1h11.15625l.84375 2.5z" fill="#fefefe" />
+      <path
+        d="m307 911.86127-6-3-.84375 2.5h-11.15625v1h11.15625l.84375 2.5z"
+        fill="#fefefe"
+      />
     </g>
   </svg>
 );
 
-export const MailIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
+export const MailIcon = (
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -207,7 +234,9 @@ export const MailIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<S
   </svg>
 );
 
-export const LockIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
+export const LockIcon = (
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -229,27 +258,31 @@ export const LockIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<S
   </svg>
 );
 
-export const GoogleIcon = ({
-  size = 24,
-  ...props
-}) => (
+export const UnlockIcon = (
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    height={size}
-    width={size}
-    viewBox="0 0 48 48"
-    {...props}
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
     {...props}
   >
-    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+    <path
+      d="M12.0011 17.3498C12.9013 17.3498 13.6311 16.6201 13.6311 15.7198C13.6311 14.8196 12.9013 14.0898 12.0011 14.0898C11.1009 14.0898 10.3711 14.8196 10.3711 15.7198C10.3711 16.6201 11.1009 17.3498 12.0011 17.3498Z"
+      fill="currentColor"
+    />
+    <path
+      d="M18.28 9.53V8.28C18.28 5.58 17.63 2 12 2C9.33 2 7.88 3.66 7.1 5.69C7.03 5.89 7.08 6.12 7.24 6.27L8.41 7.27C8.6 7.44 8.9 7.37 8.99 7.14C9.54 5.69 10.45 4.6 12 4.6C16.05 4.6 16.88 6.55 16.88 9.45V9.53C14.08 9.88 13.16 11.3 13.16 14.79V16.65C13.16 20.75 14.41 22 18.51 22H19.49C23.59 22 24.84 20.75 24.84 16.65V14.79C24.84 11.3 23.92 9.88 21.12 9.53H18.28ZM12 18.74C10.33 18.74 8.98 17.38 8.98 15.72C8.98 14.05 10.34 12.7 12 12.7C13.66 12.7 15.02 14.06 15.02 15.72C15.02 17.39 13.67 18.74 12 18.74Z"
+      fill="currentColor"
+    />
   </svg>
 );
 
-
-export const YoutubeIcon = ({
-  size = 24,
-  ...props
-}) => (
+export const GoogleIcon = ({ size = 24, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height={size}
@@ -258,6 +291,38 @@ export const YoutubeIcon = ({
     {...props}
     {...props}
   >
-    <path fill="#FF3D00" d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"></path><path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+    <path
+      fill="#FFC107"
+      d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+    ></path>
+    <path
+      fill="#FF3D00"
+      d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+    ></path>
+    <path
+      fill="#4CAF50"
+      d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+    ></path>
+    <path
+      fill="#1976D2"
+      d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+    ></path>
+  </svg>
+);
+
+export const YoutubeIcon = ({ size = 24, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={size}
+    width={size}
+    viewBox="0 0 48 48"
+    {...props}
+    {...props}
+  >
+    <path
+      fill="#FF3D00"
+      d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"
+    ></path>
+    <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
   </svg>
 );

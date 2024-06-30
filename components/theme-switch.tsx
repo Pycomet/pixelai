@@ -15,7 +15,10 @@ export interface ThemeSwitchProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SwitchComponentWrapper: FC<{ Component: ComponentType<any> } & any> = ({ Component, ...props }) => {
+const SwitchComponentWrapper: FC<{ Component: ComponentType<any> } & any> = ({
+  Component,
+  ...props
+}) => {
   return <Component {...props} />;
 };
 
@@ -50,7 +53,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         className: clsx(
           "px-px transition-opacity hover:opacity-80 cursor-pointer",
           className,
-          classNames?.base,
+          classNames?.base
         ),
       })}
     >
@@ -72,7 +75,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
               "px-0",
               "mx-0",
             ],
-            classNames?.wrapper,
+            classNames?.wrapper
           ),
         })}
       >

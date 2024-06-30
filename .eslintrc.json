@@ -7,7 +7,8 @@
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
       "next",
-      "next/core-web-vitals"
+      "next/core-web-vitals",
+      "plugin:prettier/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,13 +19,15 @@
       "sourceType": "module"
     },
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "prettier"
     ],
     "rules": {
       "semi": ["error", "always"],
       "quotes": ["error", "double"],
       "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "prettier/prettier": "error"
     }
 }
   

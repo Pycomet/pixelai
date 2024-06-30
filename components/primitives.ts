@@ -53,12 +53,12 @@ export const subtitle = tv({
   },
 });
 
-
 export const button = tv({
   base: "text-xs md:test-sm lg:text-md text-default-600 font-normal hover:opacity-50 ",
   variants: {
     color: {
-      gradient: "bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500",
+      gradient:
+        "bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500",
       blue: "bg-gradient-to-tr from-[#5EA2EF] to-[#0072F5]",
       cyan: "bg-gradient-to-tr from-[#00b7fa] to-[#01cfea]",
       pink: "bg-gradient-to-tr from-[#FF72E1] to-[#F54C7A]",
@@ -70,10 +70,10 @@ export const button = tv({
     },
   },
   defaultVariants: {
-    color: "gradient"
-  }
+    color: "gradient",
+  },
 });
 
 export const errorMessage = tv({
-  base: "text-xs lg:text-sm text-[#FF0000] pl-[1em] text-left"
+  base: "text-xs lg:text-sm text-[#FF0000] pl-[1em] text-left",
 });

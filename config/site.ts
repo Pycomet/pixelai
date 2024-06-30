@@ -2,7 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "PixelAI - AI Thumbnail Generator",
-  description: "Using AI to create engaging thumbnails for online content using advanced language models and image processing. Streamlines the thumbnail creation workflow and enhances visual presentation to boost engagement.",
+  description:
+    "Using AI to create engaging thumbnails for online content using advanced language models and image processing. Streamlines the thumbnail creation workflow and enhances visual presentation to boost engagement.",
   navItems: [
     // {
     //   label: "Home",
@@ -31,6 +32,6 @@ export const siteConfig = {
   searchTopics: [
     "How to make your first $1000",
     "The #1 secret to a desirable outcome",
-    "The hidden benefits of keeping a routing"
-  ]
+    "The hidden benefits of keeping a routing",
+  ],
 };
