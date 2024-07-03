@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import { Button, Checkbox, Input } from "@nextui-org/react";
+import { Button, Checkbox, Input, Link } from "@nextui-org/react";
 import { AnimatedDiv } from "@/components/motion";
 import {
   MailIcon,
@@ -14,6 +14,8 @@ import { button, errorMessage, title } from "@/components/primitives";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { defaultRoutes } from "@/config/routes";
+import { useUser } from "@/contexts/userContext";
 
 const registerFormSchema = yup.object().shape({
   name: yup
@@ -55,6 +57,8 @@ export const RegisterComponent = () => {
   // const { message } = useMessage();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { toggleLogin } = useUser();
   // const router = useRouter();
 
   const {
@@ -182,6 +186,16 @@ export const RegisterComponent = () => {
             onClick={() => signInWithGithub()}
           />
         </div>
+        <p className="mt-2 font-normal text-xs text-center">
+          Already have an account?
+          <Link
+            onClick={toggleLogin}
+            size="sm"
+            className="cursor-pointer text-xs pl-1"
+          >
+            Sign In
+          </Link>
+        </p>
       </form>
     </AnimatedDiv>
   );
