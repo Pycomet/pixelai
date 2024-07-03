@@ -43,7 +43,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (showLogin && user) {
       // If user opens login form and is already logged in
       setShowLogin(false);
-      router.push("/dashboard");
+      // router.push("/dashboard");
       message("You are already logged in", "success");
     }
   }, [message, router, showLogin, user]);

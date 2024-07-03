@@ -8,7 +8,6 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import Image from "next/image";
 import {
   Dropdown,
   DropdownTrigger,
@@ -29,14 +28,47 @@ import { Avatar } from "@nextui-org/avatar";
 
 import { signOut } from "@/lib/firebase/auth";
 import { useUser } from "@/contexts/userContext";
-import LogoImage from "@/assets/logo_transparent.png";
-import { AnimatedDiv } from "../motion";
 import { usePathname } from "next/navigation";
 import { defaultRoutes } from "@/config/routes";
+import Logo from "@/components/logo";
 
 export const Navbar = () => {
   const { user, toggleLogin, loading } = useUser();
   const pathname = usePathname();
+
+  const renderDropdown = () => {
+    return (
+      <Dropdown showArrow>
+        <DropdownTrigger>
+          <Avatar
+            isBordered
+            className="cursor-pointer"
+            as={Link}
+            src={user?.photoURL as string}
+          />
+        </DropdownTrigger>
+        <DropdownMenu variant="flat">
+          <DropdownSection title={`Hi, ${user?.displayName}`} showDivider>
+            <DropdownItem key="profile" className="text-right">
+              Profile
+            </DropdownItem>
+            <DropdownItem key="history" className="text-right">
+              Settings
+            </DropdownItem>
+          </DropdownSection>
+          <DropdownSection>
+            <DropdownItem
+              key="logout"
+              className="text-right"
+              onClick={() => signOut()}
+            >
+              Sign out
+            </DropdownItem>
+          </DropdownSection>
+        </DropdownMenu>
+      </Dropdown>
+    );
+  };
 
   if (pathname === (defaultRoutes?.register?.path as string)) {
     return null;
@@ -45,20 +77,7 @@ export const Navbar = () => {
       <NextUINavbar maxWidth="xl" position="sticky">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
-            <NextLink
-              className="flex justify-start items-center gap-1"
-              href="/"
-            >
-              <AnimatedDiv>
-                <Image
-                  src={LogoImage.src}
-                  width={200}
-                  height={200}
-                  alt="PixelAI"
-                  className="justify-start mt-2"
-                />
-              </AnimatedDiv>
-            </NextLink>
+            <Logo />
           </NavbarBrand>
           <ul className="hidden lg:flex gap-4 justify-start ml-2">
             {siteConfig.navItems.map(
@@ -104,40 +123,7 @@ export const Navbar = () => {
               </NavbarItem>
             </>
           ) : (
-            <NavbarItem className="hidden md:flex gap-2">
-              <Dropdown showArrow>
-                <DropdownTrigger>
-                  <Avatar
-                    isBordered
-                    className="cursor-pointer"
-                    as={Link}
-                    src={user?.photoURL as string}
-                  />
-                </DropdownTrigger>
-                <DropdownMenu variant="flat">
-                  <DropdownSection
-                    title={`Hi, ${user?.displayName}`}
-                    showDivider
-                  >
-                    <DropdownItem key="profile" className="text-right">
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem key="history" className="text-right">
-                      Settings
-                    </DropdownItem>
-                  </DropdownSection>
-                  <DropdownSection>
-                    <DropdownItem
-                      key="logout"
-                      className="text-right"
-                      onClick={() => signOut()}
-                    >
-                      Sign out
-                    </DropdownItem>
-                  </DropdownSection>
-                </DropdownMenu>
-              </Dropdown>
-            </NavbarItem>
+            <NavbarItem className="flex gap-2">{renderDropdown()}</NavbarItem>
           )}
           <NavbarItem className="hidden md:flex">
             <Button
@@ -160,24 +146,35 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarMenu>
-          <div className="mx-4 mt-2 flex flex-col gap-2">
+          <div className="mx-4 mt-2 flex flex-col gap-2 text-center">
             {siteConfig.navMenuItems.map((item, index) => (
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
-                  color={
-                    index === 2
-                      ? "primary"
-                      : index === siteConfig.navMenuItems.length - 1
-                        ? "danger"
-                        : "foreground"
-                  }
-                  href="#"
+                  color="foreground"
+                  href={item.href}
                   size="lg"
+                  className="hover:text-red-500"
                 >
                   {item.label}
                 </Link>
               </NavbarMenuItem>
             ))}
+            <br />
+            <NavbarMenuItem key="button">
+              {!user ? (
+                <Button
+                  onPress={() => {
+                    !user ? toggleLogin() : signOut();
+                  }}
+                  className="bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500 text-sm font-normal"
+                  isLoading={loading}
+                >
+                  {user ? "Log Out" : "Log In"}
+                </Button>
+              ) : (
+                renderDropdown()
+              )}
+            </NavbarMenuItem>
           </div>
         </NavbarMenu>
       </NextUINavbar>

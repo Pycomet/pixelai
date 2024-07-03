@@ -164,7 +164,7 @@ export const RegisterComponent = () => {
         </div>
         <Button
           isLoading={loading}
-          className={`${button({ hideOnMobile: true })} uppercase justify-center w-auto px-[5em] mx-auto`}
+          className={`${button({ hideOnMobile: false })} uppercase justify-center w-auto px-[5em] mx-auto`}
           type="submit"
         >
           Register

@@ -15,13 +15,15 @@ export const siteConfig = {
     // },
   ],
   navMenuItems: [
-    // {
-    //   label: "Home",
-    //   href: "/",
-    // },
     {
-      label: "Logout",
-      href: "/logout",
+      label: "Home",
+      href: "/",
+      protected: false,
+    },
+    {
+      label: "About Us",
+      href: "/about",
+      protected: false,
     },
   ],
   links: {

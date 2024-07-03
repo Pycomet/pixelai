@@ -6,8 +6,8 @@ import { Link } from "@nextui-org/link";
 import { ThemeSwitch } from "../theme-switch";
 import { AnimatedDiv } from "@/components/motion";
 import { Image } from "@nextui-org/react";
-import LogoImage from "@/assets/logo_transparent.png";
 import BGImage from "@/assets/stock1.jpg";
+import Logo from "../logo";
 
 interface PageLayoutProps {
   showNav: boolean;
@@ -58,12 +58,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
               />
             </AnimatedDiv>
             <section className="w-full lg:w-1/2 flex flex-col mx-auto justify-center items-center">
-              <Image
-                src={LogoImage.src}
-                width={200}
-                height={200}
-                alt="PixelAI"
-              />
+              <Logo />
               {children}
             </section>
           </section>
