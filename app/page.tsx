@@ -14,7 +14,7 @@ export default function Home() {
             Elevate Your Visual Storytelling with&nbsp;
           </h1>
           <br />
-          <h1 className={title({ color: "pink" })}>AI-Powered Thumbnails</h1>
+          <h1 className={title({ color: "base" })}>AI-Powered Thumbnails</h1>
           <p className={subtitle({ class: "my-4" })}>
             Our cutting-edge AI thumbnail generator takes the guesswork out of
             design, allowing you to focus on creating great content while

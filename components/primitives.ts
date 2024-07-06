@@ -4,6 +4,7 @@ export const title = tv({
   base: "tracking-tight inline font-semibold font-mono",
   variants: {
     color: {
+      base: "from-[#900c27] to-[#F7C769]",
       violet: "from-[#FF1CF7] to-[#b249f8]",
       yellow: "from-[#FF705B] to-[#FFB457]",
       blue: "from-[#5EA2EF] to-[#0072F5]",
@@ -28,6 +29,7 @@ export const title = tv({
   compoundVariants: [
     {
       color: [
+        "base",
         "violet",
         "yellow",
         "blue",
@@ -36,7 +38,7 @@ export const title = tv({
         "pink",
         "foreground",
       ],
-      class: "bg-clip-text text-transparent bg-gradient-to-b",
+      class: "bg-clip-text text-transparent bg-gradient-to-r",
     },
   ],
 });
@@ -57,8 +59,7 @@ export const button = tv({
   base: "text-xs md:test-sm lg:text-md text-default-600 font-normal hover:opacity-50 ",
   variants: {
     color: {
-      gradient:
-        "bg-gradient-to-tr from-yellow-500 dark:from-pink-500 dark:to-yellow-500 to-pink-500",
+      gradient: "bg-gradient-to-tr from-[#900C27] to-[#F7C769]",
       blue: "bg-gradient-to-tr from-[#5EA2EF] to-[#0072F5]",
       cyan: "bg-gradient-to-tr from-[#00b7fa] to-[#01cfea]",
       pink: "bg-gradient-to-tr from-[#FF72E1] to-[#F54C7A]",

@@ -9,13 +9,20 @@ import {
   GithubIcon,
   UnlockIcon,
 } from "@/components/icons";
-import { signInWithGoogle, signInWithGithub } from "@/lib/firebase/auth";
+import {
+  signInWithGoogle,
+  signInWithGithub,
+  createNewUser,
+} from "@/lib/firebase/auth";
 import { button, errorMessage, title } from "@/components/primitives";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { defaultRoutes } from "@/config/routes";
 import { useUser } from "@/contexts/userContext";
+import { useRouter } from "next/navigation";
+import { defaultRoutes } from "@/config/routes";
+import { useMessage } from "@/contexts/messageContext";
+import { User } from "firebase/auth";
 
 const registerFormSchema = yup.object().shape({
   name: yup
@@ -59,7 +66,8 @@ export const RegisterComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { toggleLogin } = useUser();
-  // const router = useRouter();
+  const router = useRouter();
+  const { message } = useMessage();
 
   const {
     register,
@@ -73,7 +81,24 @@ export const RegisterComponent = () => {
   const onSubmit = async (data: RegisterFormData) => {
     setLoading(true);
 
-    console.log(data);
+    try {
+      const user: User | null = await createNewUser(
+        data.email,
+        data.password,
+        data.name,
+        data.subscribe
+      );
+      if (user) {
+        message("Login successfully!", "success");
+        console.log(user.uid, "New user");
+
+        router.push(defaultRoutes.home.path);
+      } else {
+        throw new Error("Unable to create new user with these credentials");
+      }
+    } catch (err: unknown) {
+      message(err ? (err as Error).message : "Something went wrong", "error");
+    }
 
     setTimeout(() => {
       setLoading(false);
@@ -152,7 +177,7 @@ export const RegisterComponent = () => {
         <div className="flex flex-col py-2 px-1 gap-2">
           <Checkbox
             classNames={{
-              label: "text-small",
+              label: "text-xs",
             }}
           >
             I agree to the terms and conditions
@@ -160,12 +185,13 @@ export const RegisterComponent = () => {
           <Checkbox
             {...register("subscribe", { required: true })}
             classNames={{
-              label: "text-small",
+              label: "text-xs",
             }}
           >
             Subscribe to get updates
           </Checkbox>
         </div>
+        <br />
         <Button
           isLoading={loading}
           className={`${button({ hideOnMobile: false })} uppercase justify-center w-auto px-[5em] mx-auto`}

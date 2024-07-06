@@ -46,7 +46,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
             <ThemeSwitch />
           </div>
           <section className="flex flex-row justify-between">
-            <AnimatedDiv className="hidden md:block h-fit">
+            <AnimatedDiv className="hidden lg:block h-fit">
               <Image
                 isZoomed
                 isBlurred

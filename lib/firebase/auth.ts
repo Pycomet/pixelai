@@ -1,21 +1,25 @@
 // auth.ts
-import { auth } from "@/lib/firebase/firebaseConfig"; // Adjust the path to your config file
+import { auth, db } from "@/lib/firebase/firebaseConfig"; // Adjust the path to your config file
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  updateProfile,
   signInWithEmailAndPassword,
   onAuthStateChanged as _onAuthStateChanged,
 } from "firebase/auth";
 import { User } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 // Type for the callback function used in onAuthStateChanged
 type AuthStateChangedCallback = (user: User | null) => void;
 
 export async function createNewUser(
   email: string,
-  password: string
+  password: string,
+  displayName: string,
+  isSubscribed: boolean
 ): Promise<User | null> {
   try {
     const response = await createUserWithEmailAndPassword(
@@ -23,9 +27,20 @@ export async function createNewUser(
       email,
       password
     );
-    console.log("Successfully created a new user:", response.user);
 
     const user: User = response.user;
+
+    // Add diplay name
+    await updateProfile(user, { displayName });
+
+    // Other parameters
+    await setDoc(doc(db, "users", user.uid), {
+      displayName,
+      email,
+      isSubscribed,
+    });
+
+    console.log("Successfully created a new user:", response.user);
     return user;
   } catch (error) {
     console.error("Error creating user", error);
@@ -42,6 +57,8 @@ export async function signInWithGoogle(): Promise<void> {
 
   try {
     await signInWithPopup(auth, provider);
+
+    // TODO: Add User Data To Database For Reference
   } catch (error) {
     console.error("Error signing in with Google", error);
   }
@@ -52,6 +69,8 @@ export async function signInWithGithub(): Promise<void> {
 
   try {
     await signInWithPopup(auth, provider);
+
+    // TODO: Add User Data To Database For Reference
   } catch (error) {
     console.error("Error signing in with Google", error);
   }
