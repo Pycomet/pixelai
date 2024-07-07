@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "out/types/**/*.ts"
-  ],
+, "__mocks__/firebaseConfig.ts"  ],
   "exclude": [
     "node_modules"
   ]
