@@ -5,20 +5,25 @@ export const siteConfig = {
   description:
     "Using AI to create engaging thumbnails for online content using advanced language models and image processing. Streamlines the thumbnail creation workflow and enhances visual presentation to boost engagement.",
   navItems: [
-    // {
-    //   label: "Home",
-    //   href: "/",
-    // },
-    // {
-    //   label: "Pricing",
-    //   href: "/pricing",
-    // },
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
   ],
   navMenuItems: [
     {
       label: "Home",
       href: "/",
       protected: false,
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      protected: true,
     },
     {
       label: "About Us",

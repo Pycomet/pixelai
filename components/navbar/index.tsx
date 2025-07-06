@@ -49,6 +49,14 @@ export const Navbar = () => {
         </DropdownTrigger>
         <DropdownMenu variant="flat">
           <DropdownSection title={`Hi, ${user?.displayName}`} showDivider>
+            <DropdownItem
+              key="dashboard"
+              className="text-right"
+              as={NextLink}
+              href="/dashboard"
+            >
+              Dashboard
+            </DropdownItem>
             <DropdownItem key="profile" className="text-right">
               Profile
             </DropdownItem>
