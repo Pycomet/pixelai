@@ -8,12 +8,32 @@ import { AnimatedDiv, AnimatedList } from "@/components/motion";
 import { SearchIcon } from "@/components/icons";
 import { button } from "@/components/primitives";
 import { siteConfig } from "@/config/site";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/contexts/userContext";
 
 export const SearchComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
+  const { user, toggleLogin } = useUser();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleGenerate = () => {
+    const authDisabled = process.env.NEXT_PUBLIC_DISABLE_AUTH === "true";
+
+    if (!authDisabled && !user) {
+      toggleLogin();
+      return;
+    }
+
+    // Navigate to dashboard with the search query
+    const searchParams = new URLSearchParams();
+    if (inputValue.trim()) {
+      searchParams.set("prompt", inputValue.trim());
+    }
+    router.push(`/dashboard?${searchParams.toString()}`);
   };
 
   return (
@@ -51,7 +71,7 @@ export const SearchComponent: React.FC = () => {
         }
         endContent={
           <AnimatedDiv isOpen={inputValue !== ""}>
-            <Button size="sm" className={button()}>
+            <Button size="sm" className={button()} onClick={handleGenerate}>
               Generate
             </Button>
           </AnimatedDiv>
