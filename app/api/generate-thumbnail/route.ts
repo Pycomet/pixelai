@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   generateThumbnail,
   ThumbnailGenerationOptions,
+<<<<<<< HEAD
 } from "@/lib/ai/huggingface";
+=======
+} from "@/lib/ai";
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 
 // Enhanced error response helper
 function createErrorResponse(message: string, status: number = 500, type?: string) {
@@ -25,7 +29,13 @@ export async function POST(request: NextRequest) {
       style = "tech",
       model = "sdxl",
       quality = "balanced",
+<<<<<<< HEAD
       userId,
+=======
+      provider = "huggingface",
+      userId,
+      refinementPrompt,
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     } = body;
 
     // Enhanced input validation
@@ -53,6 +63,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+<<<<<<< HEAD
     // Validate model and quality
     const validModels = ["sdxl", "flux", "realistic"];
     const validQualities = ["fast", "balanced", "high"];
@@ -61,6 +72,16 @@ export async function POST(request: NextRequest) {
     if (!validModels.includes(model)) {
       return createErrorResponse(
         "Invalid AI model selected. Please choose a valid model.",
+=======
+    // Validate parameters
+    const validProviders = ["huggingface", "stability", "fal"];
+    const validQualities = ["fast", "balanced", "high"];
+    const validStyles = ["tech", "gaming", "tutorial", "lifestyle"];
+
+    if (!validProviders.includes(provider)) {
+      return createErrorResponse(
+        "Invalid AI provider selected. Please choose a valid provider.",
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
         400,
         "validation"
       );
@@ -82,10 +103,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
+<<<<<<< HEAD
     // Check for API key
     if (!process.env.HUGGINGFACE_API_KEY) {
       return createErrorResponse(
         "AI service is not configured. Please contact support.",
+=======
+    // Check for API key based on provider
+    let apiKeyMissing = false;
+    let apiKeyName = "";
+    
+    switch (provider) {
+      case 'huggingface':
+        apiKeyMissing = !process.env.HUGGINGFACE_API_KEY;
+        apiKeyName = "HUGGINGFACE_API_KEY";
+        break;
+      case 'stability':
+        apiKeyMissing = !process.env.STABILITY_API_KEY;
+        apiKeyName = "STABILITY_API_KEY";
+        break;
+      case 'fal':
+        apiKeyMissing = !process.env.FAL_KEY;
+        apiKeyName = "FAL_KEY";
+        break;
+    }
+    
+    if (apiKeyMissing) {
+      return createErrorResponse(
+        `AI service is not configured (${apiKeyName} missing). Please contact support.`,
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
         500,
         "api"
       );
@@ -97,7 +143,13 @@ export async function POST(request: NextRequest) {
       style,
       model,
       quality,
+<<<<<<< HEAD
       userId,
+=======
+      provider,
+      userId,
+      refinementPrompt: refinementPrompt?.trim(),
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     };
 
     console.log("Generating thumbnail with options:", {
@@ -105,7 +157,13 @@ export async function POST(request: NextRequest) {
       style,
       model,
       quality,
+<<<<<<< HEAD
       userId: userId ? "***" : "none",
+=======
+      provider,
+      userId: userId ? "***" : "none",
+      refinement: refinementPrompt ? "yes" : "no",
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     });
 
     const result = await generateThumbnail(options);
@@ -121,6 +179,10 @@ export async function POST(request: NextRequest) {
       prompt: result.prompt,
       style: result.style,
       model: result.model,
+<<<<<<< HEAD
+=======
+      provider: result.provider,
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
       parameters: result.parameters,
       timestamp: new Date().toISOString(),
     });

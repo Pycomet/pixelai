@@ -21,7 +21,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatedDiv } from "@/components/motion";
 import { SearchIcon, RightArrowIcon } from "@/components/icons";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import { Cpu, Clock, AlertCircle, RefreshCw } from "lucide-react";
+=======
+import { Cpu, Clock, AlertCircle, RefreshCw, Globe } from "lucide-react";
+import { getAvailableProviders, getModelsForProvider, type AIProvider, type AIModel } from "@/lib/ai";
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 
 type ThumbnailStyle = "tech" | "gaming" | "tutorial" | "lifestyle";
 
@@ -30,6 +35,10 @@ interface GenerationResult {
   prompt: string;
   style: string;
   model: string;
+<<<<<<< HEAD
+=======
+  provider: string;
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
   parameters: {
     steps: number;
     guidance_scale: number;
@@ -170,16 +179,28 @@ const modelOptions = [
     recommended: true,
   },
   {
+<<<<<<< HEAD
     value: "flux",
     label: "FLUX Schnell",
     description: "Latest model with superior quality",
+=======
+    value: "sd15",
+    label: "Stable Diffusion 1.5",
+    description: "Fast and reliable generation",
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     icon: "🚀",
     recommended: false,
   },
   {
+<<<<<<< HEAD
     value: "realistic",
     label: "Realistic SD",
     description: "More photorealistic outputs",
+=======
+    value: "sd21",
+    label: "Stable Diffusion 2.1",
+    description: "Good quality output",
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     icon: "📸",
     recommended: false,
   },
@@ -211,6 +232,7 @@ const qualityOptions = [
 
 // Intelligent suggestion system - creates short, punchy suggestions
 const generateSmartSuggestions = (input: string): string[] => {
+<<<<<<< HEAD
   const trimmedInput = input.trim().toLowerCase();
 
   if (trimmedInput.length < 3) return [];
@@ -423,6 +445,38 @@ const generateSmartSuggestions = (input: string): string[] => {
     .map((s) => s.replace(/\s+/g, " ").trim())
     .filter((s, index, arr) => arr.indexOf(s) === index)
     .slice(0, 3);
+=======
+  const inputLower = input.toLowerCase();
+  const suggestions: string[] = [];
+
+  // Content type suggestions
+  if (inputLower.includes("review") || inputLower.includes("unboxing")) {
+    suggestions.push("Tech product review with shocked reaction");
+    suggestions.push("Unboxing video with surprised face");
+  }
+  if (inputLower.includes("tutorial") || inputLower.includes("how to")) {
+    suggestions.push("Step-by-step tutorial with clear instructions");
+    suggestions.push("Easy tutorial for beginners");
+  }
+  if (inputLower.includes("gaming") || inputLower.includes("game")) {
+    suggestions.push("Epic gaming moment with intense action");
+    suggestions.push("Gaming highlight reel compilation");
+  }
+  if (inputLower.includes("lifestyle") || inputLower.includes("vlog")) {
+    suggestions.push("Daily lifestyle vlog with authentic moments");
+    suggestions.push("Personal story with emotional journey");
+  }
+
+  // Generic suggestions if no specific content detected
+  if (suggestions.length === 0) {
+    suggestions.push("Exciting content with dramatic reveal");
+    suggestions.push("Before and after transformation");
+    suggestions.push("Top 10 list with numbered items");
+    suggestions.push("Challenge video with surprising outcome");
+  }
+
+  return suggestions.slice(0, 3);
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 };
 
 function DashboardContent() {
@@ -433,6 +487,10 @@ function DashboardContent() {
 
   const [prompt, setPrompt] = useState("");
   const [style, setStyle] = useState<ThumbnailStyle>("tech");
+<<<<<<< HEAD
+=======
+  const [provider, setProvider] = useState("huggingface");
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
   const [model, setModel] = useState("sdxl");
   const [quality, setQuality] = useState("balanced");
   const [loading, setLoading] = useState(false);
@@ -441,6 +499,39 @@ function DashboardContent() {
   const [error, setError] = useState<ErrorInfo | null>(null);
   const [retryCount, setRetryCount] = useState(0);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+<<<<<<< HEAD
+=======
+  const [refinementPrompt, setRefinementPrompt] = useState("");
+  const [hasRefined, setHasRefined] = useState(false);
+  const [isRefining, setIsRefining] = useState(false);
+  const [availableProviders, setAvailableProviders] = useState<AIProvider[]>([]);
+  const [currentModels, setCurrentModels] = useState<AIModel[]>([]);
+
+  // Load available providers on component mount
+  useEffect(() => {
+    const providers = getAvailableProviders();
+    setAvailableProviders(providers);
+    
+    // Set default provider based on availability
+    if (providers.length > 0) {
+      setProvider(providers[0].id);
+    }
+  }, []);
+
+  // Update models when provider changes
+  useEffect(() => {
+    if (provider) {
+      const models = getModelsForProvider(provider);
+      setCurrentModels(models);
+      
+      // Set default model for the provider
+      if (models.length > 0) {
+        const recommendedModel = models.find(m => m.recommended) || models[0];
+        setModel(recommendedModel.id);
+      }
+    }
+  }, [provider]);
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 
   // Handle search parameters
   useEffect(() => {
@@ -462,7 +553,11 @@ function DashboardContent() {
 
   // Simulate progress during generation
   useEffect(() => {
+<<<<<<< HEAD
     if (loading) {
+=======
+    if (loading || isRefining) {
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
       setProgress(0);
       const interval = setInterval(() => {
         setProgress((prev) => {
@@ -472,7 +567,11 @@ function DashboardContent() {
       }, 500);
       return () => clearInterval(interval);
     }
+<<<<<<< HEAD
   }, [loading]);
+=======
+  }, [loading, isRefining]);
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 
   // Show toast notifications for errors
   useEffect(() => {
@@ -503,6 +602,11 @@ function DashboardContent() {
     setError(null);
     setResult(null);
     setProgress(0);
+<<<<<<< HEAD
+=======
+    setHasRefined(false);
+    setRefinementPrompt("");
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
 
     // Simulate progress updates
     const progressInterval = setInterval(() => {
@@ -521,6 +625,10 @@ function DashboardContent() {
           style,
           model,
           quality,
+<<<<<<< HEAD
+=======
+          provider,
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
           userId,
         }),
       });
@@ -561,6 +669,77 @@ function DashboardContent() {
     }, 1000);
   };
 
+<<<<<<< HEAD
+=======
+  const handleRefine = async () => {
+    if (!refinementPrompt.trim()) {
+      const validationError = {
+        type: "validation" as const,
+        message: "Please enter a refinement prompt",
+        retryable: false
+      };
+      setError(validationError);
+      return;
+    }
+
+    setIsRefining(true);
+    setError(null);
+    setProgress(0);
+
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => Math.min(prev + 10, 90));
+    }, 800);
+
+    try {
+      const userId = authDisabled ? "demo-user" : user?.uid;
+      const refinedPrompt = `${prompt} ${refinementPrompt}`.trim();
+      
+      const response = await fetch("/api/generate-thumbnail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: refinedPrompt,
+          style,
+          model,
+          quality,
+          provider,
+          userId,
+          refinementPrompt,
+        }),
+      });
+
+      clearInterval(progressInterval);
+      setProgress(100);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult(data);
+        setHasRefined(true);
+        setRefinementPrompt("");
+        message("Thumbnail refined successfully!", "success");
+      } else {
+        const errorInfo = categorizeError(data.error);
+        setError(errorInfo);
+      }
+    } catch (err) {
+      clearInterval(progressInterval);
+      const errorInfo = categorizeError(err);
+      setError(errorInfo);
+      console.error("Refinement error:", err);
+    } finally {
+      setIsRefining(false);
+      setTimeout(() => setProgress(0), 2000);
+    }
+  };
+
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
   const handleSuggestionClick = (suggestion: string) => {
     setPrompt(suggestion);
     setSuggestions([]);
@@ -582,6 +761,7 @@ function DashboardContent() {
       <div className="container mx-auto max-w-7xl py-6 md:py-10">
         {/* Header Section */}
         <AnimatedDiv className="text-center mb-12">
+<<<<<<< HEAD
           <h1 className={title({ size: "lg" })}>Create Your Perfect&nbsp;</h1>
           <h1 className={title({ color: "base", size: "lg" })}>
             YouTube Thumbnail
@@ -589,6 +769,17 @@ function DashboardContent() {
           <p className={subtitle({ class: "mt-4 mx-auto" })}>
             Transform your video ideas into eye-catching thumbnails that boost
             clicks and views
+=======
+          <h1 className={title({ size: "lg" })}>
+            Create Your Perfect&nbsp;
+          </h1>
+          <h1 className={title({ color: "base", size: "lg" })}>
+            Thumbnail
+          </h1>
+          <p className={subtitle({ class: "mt-4 mx-auto" })}>
+            Transform your video ideas into eye-catching thumbnails that boost
+            clicks and engagement
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
           </p>
         </AnimatedDiv>
 
@@ -601,17 +792,28 @@ function DashboardContent() {
                 <CardBody className="space-y-6">
                   <div className="space-y-2">
                     <h2 className="text-2xl font-semibold">
+<<<<<<< HEAD
                       Describe Your Video
                     </h2>
                     <p className="text-default-600 text-sm">
                       Tell us what your video is about and we&apos;ll create the
+=======
+                      Describe Your Content
+                    </h2>
+                    <p className="text-default-600 text-sm">
+                      Tell us what your content is about and we&apos;ll create the
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                       perfect thumbnail
                     </p>
                   </div>
 
                   <Input
                     size="lg"
+<<<<<<< HEAD
                     label="Video Description"
+=======
+                    label="Content Description"
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                     placeholder="e.g., iPhone 15 Pro Max review with surprised reaction"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -672,7 +874,13 @@ function DashboardContent() {
               <Card className="p-6 shadow-xl bg-default-50/50 dark:bg-default-100/50 backdrop-blur-md">
                 <CardBody className="space-y-4">
                   <div className="space-y-2">
+<<<<<<< HEAD
                     <h2 className="text-2xl font-semibold">Choose Your Style</h2>
+=======
+                    <h2 className="text-2xl font-semibold">
+                      Choose Your Style
+                    </h2>
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                     <p className="text-default-600 text-sm">
                       Select the aesthetic that matches your content
                     </p>
@@ -711,6 +919,78 @@ function DashboardContent() {
               </Card>
             </AnimatedDiv>
 
+<<<<<<< HEAD
+=======
+            {/* AI Provider Selection */}
+            <AnimatedDiv>
+              <Card className="p-6 shadow-xl bg-default-50/50 dark:bg-default-100/50 backdrop-blur-md">
+                <CardBody className="space-y-4">
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-semibold">
+                      Choose AI Provider
+                    </h2>
+                    <p className="text-default-600 text-sm">
+                      Select your preferred AI service for generating thumbnails
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {availableProviders.map((providerOption) => (
+                      <motion.div
+                        key={providerOption.id}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Card
+                          isPressable
+                          className={`cursor-pointer transition-all h-full ${
+                            provider === providerOption.id
+                              ? "ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 bg-gradient-to-br from-primary/10 to-secondary/10"
+                              : "hover:scale-102 bg-default-100/50 hover:bg-default-200/50"
+                          }`}
+                          onClick={() => setProvider(providerOption.id)}
+                        >
+                          <CardBody className="p-4 text-center">
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 ${
+                                provider === providerOption.id
+                                  ? "bg-gradient-to-br from-primary to-secondary text-white"
+                                  : "bg-gradient-to-br from-gray-400 to-gray-600 text-white"
+                              }`}
+                            >
+                              <Globe className="w-6 h-6" />
+                            </div>
+                            <div className="flex items-center justify-center gap-2 mb-2">
+                              <h3 className="font-semibold text-sm">
+                                {providerOption.name}
+                              </h3>
+                              <Badge 
+                                color={
+                                  providerOption.pricing === 'FREE' ? 'success' : 
+                                  providerOption.pricing.includes('FREE') ? 'warning' : 'primary'
+                                }
+                                size="sm"
+                                variant="flat"
+                              >
+                                {providerOption.pricing}
+                              </Badge>
+                            </div>
+                            <p className="text-xs text-default-500 mb-2">
+                              {providerOption.description}
+                            </p>
+                            <p className="text-xs text-default-400">
+                              {providerOption.models.length} model{providerOption.models.length !== 1 ? 's' : ''}
+                            </p>
+                          </CardBody>
+                        </Card>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardBody>
+              </Card>
+            </AnimatedDiv>
+
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
             {/* Model and Quality Settings */}
             <AnimatedDiv>
               <Card className="p-6 shadow-xl bg-default-50/50 dark:bg-default-100/50 backdrop-blur-md">
@@ -734,6 +1014,7 @@ function DashboardContent() {
                         </span>
                       </div>
                       <div className="space-y-3">
+<<<<<<< HEAD
                         {modelOptions.map((option) => (
                           <motion.div
                             key={option.value}
@@ -748,13 +1029,33 @@ function DashboardContent() {
                                   : "bg-default-200/50 hover:bg-default-300/50"
                               }`}
                               onClick={() => setModel(option.value)}
+=======
+                        {currentModels.map((option) => (
+                                                      <motion.div
+                              key={option.id}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Card
+                                isPressable
+                                className={`cursor-pointer transition-all ${
+                                  model === option.id
+                                    ? "bg-gradient-to-r from-purple-600 to-blue-600 scale-105"
+                                    : "bg-default-200/50 hover:bg-default-300/50"
+                                }`}
+                                onClick={() => setModel(option.id)}
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                             >
                               <CardBody className="p-4">
                                 <div className="flex items-center justify-between">
                                   <div>
                                     <div className="flex items-center gap-2">
                                       <span className="text-default-700 font-medium">
+<<<<<<< HEAD
                                         {option.label}
+=======
+                                        {option.name}
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                                       </span>
                                       {option.recommended && (
                                         <Badge color="success" size="sm">
@@ -838,9 +1139,13 @@ function DashboardContent() {
                 isLoading={loading}
                 fullWidth
                 endContent={
+<<<<<<< HEAD
                   !loading && (
                     <RightArrowIcon className="w-5 h-5 text-white" />
                   )
+=======
+                  !loading && <RightArrowIcon className="w-5 h-5 text-white" />
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                 }
               >
                 {loading ? "Creating Your Thumbnail..." : "Generate Thumbnail"}
@@ -848,13 +1153,23 @@ function DashboardContent() {
             </AnimatedDiv>
 
             {/* Progress Bar */}
+<<<<<<< HEAD
             {loading && (
+=======
+            {(loading || isRefining) && (
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
               <AnimatedDiv>
                 <Card className="p-4 shadow-lg bg-default-50/50 dark:bg-default-100/50 backdrop-blur-md">
                   <CardBody>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
+<<<<<<< HEAD
                         <p className="text-sm font-medium">Generating...</p>
+=======
+                        <p className="text-sm font-medium">
+                          {isRefining ? "Refining..." : "Generating..."}
+                        </p>
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                         <p className="text-sm text-default-500">
                           {Math.round(progress)}%
                         </p>
@@ -866,7 +1181,14 @@ function DashboardContent() {
                         size="sm"
                       />
                       <div className="text-xs text-default-500 text-center">
+<<<<<<< HEAD
                         Using {modelOptions.find((m) => m.value === model)?.label} • {qualityOptions.find((q) => q.value === quality)?.label} quality
+=======
+                        Using{" "}
+                        {currentModels.find((m) => m.id === model)?.name} •{" "}
+                        {qualityOptions.find((q) => q.value === quality)?.label}{" "}
+                        quality • {availableProviders.find((p) => p.id === provider)?.name}
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                       </div>
                     </div>
                   </CardBody>
@@ -950,11 +1272,18 @@ function DashboardContent() {
                           </Chip>
                         </div>
                         <div className="flex items-center justify-between">
+<<<<<<< HEAD
                           <span className="text-sm font-medium">
                             Parameters:
                           </span>
                           <Chip size="sm" variant="flat" color="primary">
                             {result.parameters.steps} steps, {result.parameters.guidance_scale} guidance
+=======
+                          <span className="text-sm font-medium">Parameters:</span>
+                          <Chip size="sm" variant="flat" color="primary">
+                            {result.parameters.steps} steps,{" "}
+                            {result.parameters.guidance_scale} guidance
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                           </Chip>
                         </div>
                       </div>
@@ -972,6 +1301,60 @@ function DashboardContent() {
                       >
                         Download Thumbnail
                       </Button>
+<<<<<<< HEAD
+=======
+
+                      {/* Refinement Section */}
+                      {!hasRefined && (
+                        <div className="space-y-3 mt-4 pt-4 border-t border-default-200">
+                          <div className="space-y-1">
+                            <h3 className="text-sm font-medium text-default-700">
+                              Refine Your Thumbnail
+                            </h3>
+                            <p className="text-xs text-default-500">
+                              Make one improvement to your thumbnail
+                            </p>
+                          </div>
+                          <Input
+                            size="sm"
+                            placeholder="e.g., make it more colorful, add text, change lighting..."
+                            value={refinementPrompt}
+                            onChange={(e) => setRefinementPrompt(e.target.value)}
+                            maxLength={200}
+                            description={`${refinementPrompt.length}/200 characters`}
+                            classNames={{
+                              inputWrapper: [
+                                "bg-default-100",
+                                "border-1",
+                                "border-default-200",
+                                "hover:border-default-300",
+                                "focus:border-primary",
+                              ],
+                            }}
+                          />
+                          <Button
+                            onClick={handleRefine}
+                            isLoading={isRefining}
+                            size="sm"
+                            className="w-full"
+                            color="secondary"
+                            variant="flat"
+                            isDisabled={!refinementPrompt.trim()}
+                          >
+                            {isRefining ? "Refining..." : "Refine Thumbnail"}
+                          </Button>
+                        </div>
+                      )}
+
+                      {hasRefined && (
+                        <div className="mt-4 pt-4 border-t border-default-200">
+                          <div className="flex items-center justify-center gap-2 text-sm text-success-600">
+                            <span className="text-success-500">✓</span>
+                            <span>Thumbnail refined</span>
+                          </div>
+                        </div>
+                      )}
+>>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
                     </div>
                   ) : (
                     <div className="text-center py-12">

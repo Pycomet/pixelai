@@ -21,7 +21,7 @@ export default function Home() {
             maintaining a polished online presence.
           </p>
           <Button
-            // onClick={() => {}}
+            onClick={() => (window.location.href = "/dashboard")}
             className={button({ hideOnMobile: true })}
             endContent={<RightArrowIcon className="text-primary" />}
           >
