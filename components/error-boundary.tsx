@@ -12,7 +12,7 @@ interface ErrorBoundaryState {
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
-  fallback?: React.ComponentType<{ error: Error; reset: () => void }>;
+  fallback?: React.FC<{ error: Error; reset: () => void }>;
 }
 
 export class ErrorBoundary extends React.Component<
@@ -39,7 +39,7 @@ export class ErrorBoundary extends React.Component<
     console.error("Error Boundary caught an error:", error, errorInfo);
     this.setState({
       error,
-      errorInfo: errorInfo.componentStack,
+      errorInfo: errorInfo.componentStack ?? null,
     });
   }
 
@@ -78,15 +78,16 @@ export class ErrorBoundary extends React.Component<
                       An unexpected error occurred while loading this page.
                     </p>
                   </div>
-                  
-                  {process.env.NODE_ENV === "development" && this.state.error && (
-                    <div className="bg-danger-100 dark:bg-danger-900/20 p-3 rounded-lg">
-                      <p className="text-xs text-danger-600 dark:text-danger-400 font-mono">
-                        {this.state.error.message}
-                      </p>
-                    </div>
-                  )}
-                  
+
+                  {process.env.NODE_ENV === "development" &&
+                    this.state.error && (
+                      <div className="bg-danger-100 dark:bg-danger-900/20 p-3 rounded-lg">
+                        <p className="text-xs text-danger-600 dark:text-danger-400 font-mono">
+                          {this.state.error.message}
+                        </p>
+                      </div>
+                    )}
+
                   <div className="flex gap-2">
                     <Button
                       color="danger"
@@ -101,7 +102,7 @@ export class ErrorBoundary extends React.Component<
                       color="danger"
                       variant="light"
                       size="sm"
-                      onClick={() => window.location.href = "/"}
+                      onClick={() => (window.location.href = "/")}
                     >
                       Go Home
                     </Button>
@@ -139,4 +140,4 @@ export function useErrorBoundary() {
   return { captureError, resetError };
 }
 
-export default ErrorBoundary; 
+export default ErrorBoundary;
