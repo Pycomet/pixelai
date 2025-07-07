@@ -1,18 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  generateThumbnail,
-  ThumbnailGenerationOptions,
-<<<<<<< HEAD
-} from "@/lib/ai/huggingface";
-=======
-} from "@/lib/ai";
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
+import { generateThumbnail, ThumbnailGenerationOptions } from "@/lib/ai";
 
 // Enhanced error response helper
-function createErrorResponse(message: string, status: number = 500, type?: string) {
+function createErrorResponse(
+  message: string,
+  status: number = 500,
+  type?: string
+) {
   return NextResponse.json(
-    { 
-      error: message, 
+    {
+      error: message,
       type: type || "api",
       success: false,
       timestamp: new Date().toISOString(),
@@ -29,13 +26,9 @@ export async function POST(request: NextRequest) {
       style = "tech",
       model = "sdxl",
       quality = "balanced",
-<<<<<<< HEAD
-      userId,
-=======
       provider = "huggingface",
       userId,
       refinementPrompt,
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     } = body;
 
     // Enhanced input validation
@@ -63,16 +56,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-<<<<<<< HEAD
-    // Validate model and quality
-    const validModels = ["sdxl", "flux", "realistic"];
-    const validQualities = ["fast", "balanced", "high"];
-    const validStyles = ["tech", "gaming", "tutorial", "lifestyle"];
-
-    if (!validModels.includes(model)) {
-      return createErrorResponse(
-        "Invalid AI model selected. Please choose a valid model.",
-=======
     // Validate parameters
     const validProviders = ["huggingface", "stability", "fal"];
     const validQualities = ["fast", "balanced", "high"];
@@ -81,7 +64,6 @@ export async function POST(request: NextRequest) {
     if (!validProviders.includes(provider)) {
       return createErrorResponse(
         "Invalid AI provider selected. Please choose a valid provider.",
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
         400,
         "validation"
       );
@@ -103,35 +85,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-<<<<<<< HEAD
-    // Check for API key
-    if (!process.env.HUGGINGFACE_API_KEY) {
-      return createErrorResponse(
-        "AI service is not configured. Please contact support.",
-=======
     // Check for API key based on provider
     let apiKeyMissing = false;
     let apiKeyName = "";
-    
+
     switch (provider) {
-      case 'huggingface':
+      case "huggingface":
         apiKeyMissing = !process.env.HUGGINGFACE_API_KEY;
         apiKeyName = "HUGGINGFACE_API_KEY";
         break;
-      case 'stability':
+      case "stability":
         apiKeyMissing = !process.env.STABILITY_API_KEY;
         apiKeyName = "STABILITY_API_KEY";
         break;
-      case 'fal':
+      case "fal":
         apiKeyMissing = !process.env.FAL_KEY;
         apiKeyName = "FAL_KEY";
         break;
     }
-    
+
     if (apiKeyMissing) {
       return createErrorResponse(
         `AI service is not configured (${apiKeyName} missing). Please contact support.`,
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
         500,
         "api"
       );
@@ -143,13 +118,9 @@ export async function POST(request: NextRequest) {
       style,
       model,
       quality,
-<<<<<<< HEAD
-      userId,
-=======
       provider,
       userId,
       refinementPrompt: refinementPrompt?.trim(),
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     };
 
     console.log("Generating thumbnail with options:", {
@@ -157,13 +128,9 @@ export async function POST(request: NextRequest) {
       style,
       model,
       quality,
-<<<<<<< HEAD
-      userId: userId ? "***" : "none",
-=======
       provider,
       userId: userId ? "***" : "none",
       refinement: refinementPrompt ? "yes" : "no",
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
     });
 
     const result = await generateThumbnail(options);
@@ -179,10 +146,7 @@ export async function POST(request: NextRequest) {
       prompt: result.prompt,
       style: result.style,
       model: result.model,
-<<<<<<< HEAD
-=======
       provider: result.provider,
->>>>>>> cde6b69 (feat: add dashboard navigation and search functionality)
       parameters: result.parameters,
       timestamp: new Date().toISOString(),
     });
@@ -192,7 +156,7 @@ export async function POST(request: NextRequest) {
     // Enhanced error categorization
     if (error instanceof Error) {
       const errorMessage = error.message.toLowerCase();
-      
+
       // Network/connection errors
       if (errorMessage.includes("fetch") || errorMessage.includes("network")) {
         return createErrorResponse(
@@ -203,7 +167,11 @@ export async function POST(request: NextRequest) {
       }
 
       // Rate limiting errors
-      if (errorMessage.includes("rate") || errorMessage.includes("limit") || errorMessage.includes("quota")) {
+      if (
+        errorMessage.includes("rate") ||
+        errorMessage.includes("limit") ||
+        errorMessage.includes("quota")
+      ) {
         return createErrorResponse(
           "Too many requests. Please wait a moment before trying again.",
           429,
@@ -221,7 +189,10 @@ export async function POST(request: NextRequest) {
       }
 
       // Authentication errors
-      if (errorMessage.includes("unauthorized") || errorMessage.includes("forbidden")) {
+      if (
+        errorMessage.includes("unauthorized") ||
+        errorMessage.includes("forbidden")
+      ) {
         return createErrorResponse(
           "AI service authentication failed. Please contact support.",
           401,
@@ -230,7 +201,10 @@ export async function POST(request: NextRequest) {
       }
 
       // Timeout errors
-      if (errorMessage.includes("timeout") || errorMessage.includes("aborted")) {
+      if (
+        errorMessage.includes("timeout") ||
+        errorMessage.includes("aborted")
+      ) {
         return createErrorResponse(
           "Request timed out. Please try again with a shorter description.",
           408,

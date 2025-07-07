@@ -6,7 +6,7 @@ export interface ThumbnailGenerationOptions {
   prompt: string;
   style?: "tech" | "gaming" | "tutorial" | "lifestyle";
   userId?: string;
-  model?: "sdxl" | "sd15" | "sd21";
+  model?: string;
   quality?: "fast" | "balanced" | "high";
 }
 
@@ -72,12 +72,14 @@ const qualityPresets = {
 // Simple, effective prompts that work well with free models
 const stylePrompts = {
   tech: {
-    positive: "professional tech product, modern design, clean lighting, high quality",
+    positive:
+      "professional tech product, modern design, clean lighting, high quality",
     negative: "blurry, low quality, amateur",
     basePrompt: "tech thumbnail",
   },
   gaming: {
-    positive: "gaming setup, colorful lights, exciting atmosphere, high quality",
+    positive:
+      "gaming setup, colorful lights, exciting atmosphere, high quality",
     negative: "boring, dull, poor lighting",
     basePrompt: "gaming thumbnail",
   },
@@ -111,10 +113,17 @@ export async function generateThumbnail(
     throw new Error("HUGGINGFACE_API_KEY environment variable is not set");
   }
 
-  // Get model and quality settings
-  const selectedModel = models[model];
-  const qualitySettings = qualityPresets[quality];
-  const styleConfig = stylePrompts[style];
+  // Map model to valid model keys and provide fallback
+  const modelKey =
+    model && models[model as keyof typeof models]
+      ? (model as keyof typeof models)
+      : "sdxl";
+  const selectedModel = models[modelKey];
+  const qualitySettings =
+    qualityPresets[quality as keyof typeof qualityPresets] ||
+    qualityPresets.balanced;
+  const styleConfig =
+    stylePrompts[style as keyof typeof stylePrompts] || stylePrompts.tech;
 
   // Build simple, effective prompt
   const optimizedPrompt = `${styleConfig.basePrompt}, ${prompt}, ${styleConfig.positive}`;
@@ -125,7 +134,7 @@ export async function generateThumbnail(
   // Generation parameters optimized for free tier
   const parameters: GenerationParameters = {
     model: selectedModel.id,
-    width: 768,  // Smaller size for free tier
+    width: 768, // Smaller size for free tier
     height: 432, // 16:9 ratio
     steps: qualitySettings.steps,
     guidance_scale: qualitySettings.guidance_scale,
@@ -162,29 +171,53 @@ export async function generateThumbnail(
       prompt: optimizedPrompt,
       style,
       model: selectedModel.name,
-      provider: 'huggingface',
+      provider: "huggingface",
       parameters,
     };
   } catch (error) {
     console.error("❌ HuggingFace API error:", error);
-    
+
     // Enhanced error handling for common free tier issues
     if (error instanceof Error) {
-      if (error.message.includes("unauthorized") || error.message.includes("401")) {
-        throw new Error("Invalid HuggingFace API key. Please check your API key.");
+      if (
+        error.message.includes("unauthorized") ||
+        error.message.includes("401")
+      ) {
+        throw new Error(
+          "Invalid HuggingFace API key. Please check your API key."
+        );
       }
-      if (error.message.includes("rate") || error.message.includes("limit") || error.message.includes("quota")) {
-        throw new Error("HuggingFace quota exceeded. Try again in a few minutes or upgrade your account.");
+      if (
+        error.message.includes("rate") ||
+        error.message.includes("limit") ||
+        error.message.includes("quota")
+      ) {
+        throw new Error(
+          "HuggingFace quota exceeded. Try again in a few minutes or upgrade your account."
+        );
       }
-      if (error.message.includes("gated") || error.message.includes("restricted") || error.message.includes("access")) {
-        throw new Error(`Model ${selectedModel.name} requires special access. Using alternative model.`);
+      if (
+        error.message.includes("gated") ||
+        error.message.includes("restricted") ||
+        error.message.includes("access")
+      ) {
+        throw new Error(
+          `Model ${selectedModel.name} requires special access. Using alternative model.`
+        );
       }
-      if (error.message.includes("503") || error.message.includes("unavailable")) {
-        throw new Error("HuggingFace service temporarily unavailable. Try again in a few minutes.");
+      if (
+        error.message.includes("503") ||
+        error.message.includes("unavailable")
+      ) {
+        throw new Error(
+          "HuggingFace service temporarily unavailable. Try again in a few minutes."
+        );
       }
     }
-    
-    throw new Error(`Failed to generate thumbnail: ${error instanceof Error ? error.message : "Unknown error"}`);
+
+    throw new Error(
+      `Failed to generate thumbnail: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
   }
 }
 
@@ -207,7 +240,7 @@ export function getQualityPresets() {
 export async function testConnection(): Promise<boolean> {
   try {
     console.log("🔍 Testing HuggingFace connection with free tier model...");
-    
+
     const response = await hf.textToImage({
       model: models.sd15.id, // Use SD 1.5 for testing (most reliable)
       inputs: "simple test image",
@@ -218,7 +251,7 @@ export async function testConnection(): Promise<boolean> {
         guidance_scale: 7.5,
       },
     });
-    
+
     console.log("✅ HuggingFace connection test successful");
     return response !== null;
   } catch (error) {
@@ -230,7 +263,7 @@ export async function testConnection(): Promise<boolean> {
 // Test function optimized for free tier
 export async function testThumbnailGeneration(): Promise<void> {
   console.log("🧪 Testing thumbnail generation with free tier settings...");
-  
+
   try {
     const result = await generateThumbnail({
       prompt: "iPhone review",
@@ -238,7 +271,7 @@ export async function testThumbnailGeneration(): Promise<void> {
       model: "sd15", // Use most reliable model
       quality: "fast", // Use fastest setting
     });
-    
+
     console.log("✅ Test thumbnail generation successful");
     console.log("Prompt used:", result.prompt);
     console.log("Image blob size:", result.imageBlob.size, "bytes");

@@ -1,3 +1,5 @@
+"use client";
+
 import { RightArrowIcon } from "@/components/icons";
 import { title, subtitle, button } from "@/components/primitives";
 import { Button } from "@nextui-org/button";

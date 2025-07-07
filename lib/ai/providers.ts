@@ -6,7 +6,9 @@ export interface AIProvider {
   pricing: string;
   models: AIModel[];
   supportsRefinement: boolean;
-  generateThumbnail: (options: ThumbnailGenerationOptions) => Promise<ThumbnailResult>;
+  generateThumbnail: (
+    options: ThumbnailGenerationOptions
+  ) => Promise<ThumbnailResult>;
   testConnection: () => Promise<boolean>;
 }
 
@@ -16,8 +18,8 @@ export interface AIModel {
   description: string;
   icon: string;
   recommended: boolean;
-  speed: 'fast' | 'medium' | 'slow';
-  quality: 'good' | 'high' | 'excellent';
+  speed: "fast" | "medium" | "slow";
+  quality: "good" | "high" | "excellent";
 }
 
 export interface ThumbnailGenerationOptions {
@@ -51,137 +53,139 @@ export interface GenerationParameters {
 // Provider configurations
 export const AI_PROVIDERS: Record<string, AIProvider> = {
   stability: {
-    id: 'stability',
-    name: 'Stability AI',
-    description: 'Free for personal & commercial use under $1M revenue',
-    pricing: 'FREE',
+    id: "stability",
+    name: "Stability AI",
+    description: "Free for personal & commercial use under $1M revenue",
+    pricing: "FREE",
     supportsRefinement: true,
     models: [
       {
-        id: 'sd-3.5-large',
-        name: 'Stable Diffusion 3.5 Large',
-        description: '8B parameters, superior quality',
-        icon: '🎯',
+        id: "sd-3.5-large",
+        name: "Stable Diffusion 3.5 Large",
+        description: "8B parameters, superior quality",
+        icon: "🎯",
         recommended: true,
-        speed: 'medium',
-        quality: 'excellent'
+        speed: "medium",
+        quality: "excellent",
       },
       {
-        id: 'sd-3.5-turbo',
-        name: 'Stable Diffusion 3.5 Turbo',
-        description: '4-step generation, ultra-fast',
-        icon: '⚡',
+        id: "sd-3.5-turbo",
+        name: "Stable Diffusion 3.5 Turbo",
+        description: "4-step generation, ultra-fast",
+        icon: "⚡",
         recommended: false,
-        speed: 'fast',
-        quality: 'high'
+        speed: "fast",
+        quality: "high",
       },
       {
-        id: 'sdxl',
-        name: 'Stable Diffusion XL',
-        description: 'Proven quality, reliable',
-        icon: '🖼️',
+        id: "sdxl",
+        name: "Stable Diffusion XL",
+        description: "Proven quality, reliable",
+        icon: "🖼️",
         recommended: false,
-        speed: 'medium',
-        quality: 'high'
-      }
+        speed: "medium",
+        quality: "high",
+      },
     ],
     generateThumbnail: async (options: ThumbnailGenerationOptions) => {
-      const { generateThumbnail: stabilityGenerate } = await import('./stability');
+      const { generateThumbnail: stabilityGenerate } = await import(
+        "./stability"
+      );
       return stabilityGenerate(options);
     },
     testConnection: async () => {
-      const { testConnection: stabilityTest } = await import('./stability');
+      const { testConnection: stabilityTest } = await import("./stability");
       return stabilityTest();
-    }
+    },
   },
   fal: {
-    id: 'fal',
-    name: 'fal.ai',
-    description: 'Pay-per-use, excellent value',
-    pricing: '~$0.003/image',
+    id: "fal",
+    name: "fal.ai",
+    description: "Pay-per-use, excellent value",
+    pricing: "~$0.003/image",
     supportsRefinement: true,
     models: [
       {
-        id: 'flux-schnell',
-        name: 'FLUX.1 Schnell',
-        description: 'Ultra-fast, 333 images per $1',
-        icon: '🚀',
+        id: "flux-schnell",
+        name: "FLUX.1 Schnell",
+        description: "Ultra-fast, 333 images per $1",
+        icon: "🚀",
         recommended: true,
-        speed: 'fast',
-        quality: 'high'
+        speed: "fast",
+        quality: "high",
       },
       {
-        id: 'flux-dev',
-        name: 'FLUX.1 Dev',
-        description: 'Premium quality, 40 images per $1',
-        icon: '💎',
+        id: "flux-dev",
+        name: "FLUX.1 Dev",
+        description: "Premium quality, 40 images per $1",
+        icon: "💎",
         recommended: false,
-        speed: 'medium',
-        quality: 'excellent'
+        speed: "medium",
+        quality: "excellent",
       },
       {
-        id: 'hidream-fast',
-        name: 'HiDream I1 Fast',
-        description: 'New model, 16 steps',
-        icon: '✨',
+        id: "hidream-fast",
+        name: "HiDream I1 Fast",
+        description: "New model, 16 steps",
+        icon: "✨",
         recommended: false,
-        speed: 'fast',
-        quality: 'high'
-      }
+        speed: "fast",
+        quality: "high",
+      },
     ],
     generateThumbnail: async (options: ThumbnailGenerationOptions) => {
-      const { generateThumbnail: falGenerate } = await import('./fal');
+      const { generateThumbnail: falGenerate } = await import("./fal");
       return falGenerate(options);
     },
     testConnection: async () => {
-      const { testConnection: falTest } = await import('./fal');
+      const { testConnection: falTest } = await import("./fal");
       return falTest();
-    }
+    },
   },
   huggingface: {
-    id: 'huggingface',
-    name: 'HuggingFace',
-    description: 'Free tier with quota limits',
-    pricing: 'FREE (Limited)',
+    id: "huggingface",
+    name: "HuggingFace",
+    description: "Free tier with quota limits",
+    pricing: "FREE (Limited)",
     supportsRefinement: true,
     models: [
       {
-        id: 'sdxl',
-        name: 'Stable Diffusion XL',
-        description: 'Best balance of quality and speed',
-        icon: '⚡',
+        id: "sdxl",
+        name: "Stable Diffusion XL",
+        description: "Best balance of quality and speed",
+        icon: "⚡",
         recommended: true,
-        speed: 'medium',
-        quality: 'high'
+        speed: "medium",
+        quality: "high",
       },
       {
-        id: 'sd15',
-        name: 'Stable Diffusion 1.5',
-        description: 'Fast and reliable generation',
-        icon: '🚀',
+        id: "sd15",
+        name: "Stable Diffusion 1.5",
+        description: "Fast and reliable generation",
+        icon: "🚀",
         recommended: false,
-        speed: 'fast',
-        quality: 'good'
+        speed: "fast",
+        quality: "good",
       },
       {
-        id: 'sd21',
-        name: 'Stable Diffusion 2.1',
-        description: 'Good quality output',
-        icon: '📸',
+        id: "sd21",
+        name: "Stable Diffusion 2.1",
+        description: "Good quality output",
+        icon: "📸",
         recommended: false,
-        speed: 'medium',
-        quality: 'good'
-      }
+        speed: "medium",
+        quality: "good",
+      },
     ],
     generateThumbnail: async (options: ThumbnailGenerationOptions) => {
-      const { generateThumbnail: hfGenerate } = await import('./huggingface');
+      const { generateThumbnail: hfGenerate } = await import("./huggingface");
       return hfGenerate(options);
     },
     testConnection: async () => {
-      const { testConnection: hfTest } = await import('./huggingface');
+      const { testConnection: hfTest } = await import("./huggingface");
       return hfTest();
-    }
-  }
+    },
+  },
 };
 
 // Get available providers
@@ -204,4 +208,4 @@ export function getModelsForProvider(providerId: string): AIModel[] {
 export function providerSupportsRefinement(providerId: string): boolean {
   const provider = getProvider(providerId);
   return provider?.supportsRefinement || false;
-} 
+}
