@@ -134,8 +134,8 @@ export async function generateThumbnail(
   // Generation parameters optimized for free tier
   const parameters: GenerationParameters = {
     model: selectedModel.id,
-    width: 768, // Smaller size for free tier
-    height: 432, // 16:9 ratio
+    width: 768, // Standard size for free tier
+    height: 512, // Minimum required height
     steps: qualitySettings.steps,
     guidance_scale: qualitySettings.guidance_scale,
     negative_prompt: negativePrompt,

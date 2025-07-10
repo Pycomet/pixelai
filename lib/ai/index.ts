@@ -93,7 +93,7 @@ export async function getBestAvailableProvider(): Promise<string> {
   const providers = getAvailableProviders();
 
   // Test providers in order of preference
-  const preferenceOrder = ["stability", "fal", "huggingface"];
+  const preferenceOrder = ["stability", "huggingface"];
 
   for (const providerId of preferenceOrder) {
     const provider = providers.find((p) => p.id === providerId);

@@ -38,20 +38,8 @@ const stylePrompts = {
 const universalNegativePrompt =
   "low quality, blurry, amateur, watermark, text overlay, logos, copyright";
 
-// Model configurations for Stability AI
+// Model configurations for Stability AI v1 (working models only)
 const models = {
-  "sd-3.5-large": {
-    id: "stable-diffusion-3-5-large",
-    name: "Stable Diffusion 3.5 Large",
-    steps: { fast: 20, balanced: 30, high: 50 },
-    guidance: { fast: 5.0, balanced: 7.0, high: 8.0 },
-  },
-  "sd-3.5-turbo": {
-    id: "stable-diffusion-3-5-turbo",
-    name: "Stable Diffusion 3.5 Turbo",
-    steps: { fast: 4, balanced: 6, high: 8 },
-    guidance: { fast: 3.0, balanced: 5.0, high: 7.0 },
-  },
   sdxl: {
     id: "stable-diffusion-xl-1024-v1-0",
     name: "Stable Diffusion XL",
@@ -66,7 +54,7 @@ export async function generateThumbnail(
   const {
     prompt,
     style = "tech",
-    model = "sd-3.5-large",
+    model = "sdxl",
     quality = "balanced",
     refinementPrompt,
   } = options;
@@ -99,8 +87,8 @@ export async function generateThumbnail(
 
   const parameters: GenerationParameters = {
     model: selectedModel.id,
-    width: 1024,
-    height: 576, // 16:9 aspect ratio
+    width: 1344,
+    height: 768, // Closest to 16:9 ratio allowed by SDXL
     steps: qualitySettings,
     guidance_scale: guidanceSettings,
     negative_prompt: negativePrompt,

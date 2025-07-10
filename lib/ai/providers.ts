@@ -60,29 +60,11 @@ export const AI_PROVIDERS: Record<string, AIProvider> = {
     supportsRefinement: true,
     models: [
       {
-        id: "sd-3.5-large",
-        name: "Stable Diffusion 3.5 Large",
-        description: "8B parameters, superior quality",
-        icon: "🎯",
-        recommended: true,
-        speed: "medium",
-        quality: "excellent",
-      },
-      {
-        id: "sd-3.5-turbo",
-        name: "Stable Diffusion 3.5 Turbo",
-        description: "4-step generation, ultra-fast",
-        icon: "⚡",
-        recommended: false,
-        speed: "fast",
-        quality: "high",
-      },
-      {
         id: "sdxl",
         name: "Stable Diffusion XL",
         description: "Proven quality, reliable",
         icon: "🖼️",
-        recommended: false,
+        recommended: true,
         speed: "medium",
         quality: "high",
       },
@@ -98,50 +80,7 @@ export const AI_PROVIDERS: Record<string, AIProvider> = {
       return stabilityTest();
     },
   },
-  fal: {
-    id: "fal",
-    name: "fal.ai",
-    description: "Pay-per-use, excellent value",
-    pricing: "~$0.003/image",
-    supportsRefinement: true,
-    models: [
-      {
-        id: "flux-schnell",
-        name: "FLUX.1 Schnell",
-        description: "Ultra-fast, 333 images per $1",
-        icon: "🚀",
-        recommended: true,
-        speed: "fast",
-        quality: "high",
-      },
-      {
-        id: "flux-dev",
-        name: "FLUX.1 Dev",
-        description: "Premium quality, 40 images per $1",
-        icon: "💎",
-        recommended: false,
-        speed: "medium",
-        quality: "excellent",
-      },
-      {
-        id: "hidream-fast",
-        name: "HiDream I1 Fast",
-        description: "New model, 16 steps",
-        icon: "✨",
-        recommended: false,
-        speed: "fast",
-        quality: "high",
-      },
-    ],
-    generateThumbnail: async (options: ThumbnailGenerationOptions) => {
-      const { generateThumbnail: falGenerate } = await import("./fal");
-      return falGenerate(options);
-    },
-    testConnection: async () => {
-      const { testConnection: falTest } = await import("./fal");
-      return falTest();
-    },
-  },
+
   huggingface: {
     id: "huggingface",
     name: "HuggingFace",

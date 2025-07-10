@@ -1,65 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
-import { testConnection, testThumbnailGeneration } from "@/lib/ai/huggingface";
-
-export async function POST(request: NextRequest) {
-  try {
-    console.log("🔍 Starting AI service test...");
-    console.log("Request body:", await request.text());
-
-    // Check if API key is available
-    if (!process.env.HUGGINGFACE_API_KEY) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "HUGGINGFACE_API_KEY environment variable is not set",
-          type: "configuration",
-        },
-        { status: 500 }
-      );
-    }
-
-    // Test basic connection
-    console.log("Testing basic connection...");
-    const connectionTest = await testConnection();
-
-    if (!connectionTest) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "HuggingFace API connection failed",
-          type: "connection",
-        },
-        { status: 503 }
-      );
-    }
-
-    // Test thumbnail generation
-    console.log("Testing thumbnail generation...");
-    await testThumbnailGeneration();
-
-    return NextResponse.json({
-      success: true,
-      message: "AI service is working correctly",
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.error("❌ AI service test failed:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-        type: "test_failed",
-        timestamp: new Date().toISOString(),
-      },
-      { status: 500 }
-    );
-  }
-}
+import { NextResponse } from "next/server";
+import { testAllProviders, getProviderStatus } from "@/lib/ai";
 
 export async function GET() {
-  return NextResponse.json({
-    message: "AI Test API",
-    usage: "Send a POST request to test the AI service",
-  });
+  try {
+    console.log("🧪 Testing AI Providers...");
+    
+    // Test environment variables
+    const envStatus = {
+      HUGGINGFACE_API_KEY: process.env.HUGGINGFACE_API_KEY ? "Set" : "Not Set",
+      STABILITY_API_KEY: process.env.STABILITY_API_KEY ? "Set" : "Not Set",
+    };
+    
+    console.log("Environment variables:", envStatus);
+    
+    // Test all providers
+    const providerResults = await testAllProviders();
+    console.log("Provider test results:", providerResults);
+    
+    // Get detailed provider status
+    const providerStatus = await getProviderStatus();
+    console.log("Provider status:", providerStatus);
+    
+    return NextResponse.json({
+      success: true,
+      environmentVariables: envStatus,
+      providerResults,
+      providerStatus,
+      timestamp: new Date().toISOString(),
+    });
+    
+  } catch (error) {
+    console.error("❌ Test failed:", error);
+    
+    return NextResponse.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+      timestamp: new Date().toISOString(),
+    }, { status: 500 });
+  }
 }
