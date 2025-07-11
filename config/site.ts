@@ -34,7 +34,7 @@ export const siteConfig = {
   links: {
     github: "https://github.com/pycomet",
     docs: "https://github.com/pycomet",
-    sponsor: "https://patreon.com/jrgarciadev", // TODO: Add Patreon Account
+    sponsor: "https://patreon.com/pycomet",
   },
   searchTopics: [
     "How to make your first $1000",
