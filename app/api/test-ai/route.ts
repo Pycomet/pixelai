@@ -1,65 +1,43 @@
-import { NextRequest, NextResponse } from "next/server";
-import { testConnection, testThumbnailGeneration } from "@/lib/ai/huggingface";
+import { NextResponse } from "next/server";
+import { testAllProviders, getProviderStatus } from "@/lib/ai";
 
-export async function POST(request: NextRequest) {
+export async function GET() {
   try {
-    console.log("🔍 Starting AI service test...");
-    console.log("Request body:", await request.text());
+    console.log("🧪 Testing AI Providers...");
 
-    // Check if API key is available
-    if (!process.env.HUGGINGFACE_API_KEY) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "HUGGINGFACE_API_KEY environment variable is not set",
-          type: "configuration",
-        },
-        { status: 500 }
-      );
-    }
+    // Test environment variables
+    const envStatus = {
+      HUGGINGFACE_API_KEY: process.env.HUGGINGFACE_API_KEY ? "Set" : "Not Set",
+      STABILITY_API_KEY: process.env.STABILITY_API_KEY ? "Set" : "Not Set",
+    };
 
-    // Test basic connection
-    console.log("Testing basic connection...");
-    const connectionTest = await testConnection();
+    console.log("Environment variables:", envStatus);
 
-    if (!connectionTest) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "HuggingFace API connection failed",
-          type: "connection",
-        },
-        { status: 503 }
-      );
-    }
+    // Test all providers
+    const providerResults = await testAllProviders();
+    console.log("Provider test results:", providerResults);
 
-    // Test thumbnail generation
-    console.log("Testing thumbnail generation...");
-    await testThumbnailGeneration();
+    // Get detailed provider status
+    const providerStatus = await getProviderStatus();
+    console.log("Provider status:", providerStatus);
 
     return NextResponse.json({
       success: true,
-      message: "AI service is working correctly",
+      environmentVariables: envStatus,
+      providerResults,
+      providerStatus,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("❌ AI service test failed:", error);
+    console.error("❌ Test failed:", error);
 
     return NextResponse.json(
       {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
-        type: "test_failed",
         timestamp: new Date().toISOString(),
       },
       { status: 500 }
     );
   }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    message: "AI Test API",
-    usage: "Send a POST request to test the AI service",
-  });
 }

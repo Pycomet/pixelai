@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate parameters
-    const validProviders = ["huggingface", "stability", "fal"];
+    const validProviders = ["huggingface", "stability"];
     const validQualities = ["fast", "balanced", "high"];
     const validStyles = ["tech", "gaming", "tutorial", "lifestyle"];
 
@@ -97,10 +97,6 @@ export async function POST(request: NextRequest) {
       case "stability":
         apiKeyMissing = !process.env.STABILITY_API_KEY;
         apiKeyName = "STABILITY_API_KEY";
-        break;
-      case "fal":
-        apiKeyMissing = !process.env.FAL_KEY;
-        apiKeyName = "FAL_KEY";
         break;
     }
 
