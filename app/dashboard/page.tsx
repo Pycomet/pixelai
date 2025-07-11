@@ -2,7 +2,6 @@
 import { useState, useEffect, Suspense } from "react";
 import {
   Button,
-  Input,
   Card,
   CardBody,
   CardHeader,
@@ -20,9 +19,9 @@ import { PageLayout } from "@/components/layouts/pageLayout";
 import { useUser } from "@/contexts/userContext";
 import { useMessage } from "@/contexts/messageContext";
 import { title, subtitle, button } from "@/components/primitives";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { AnimatedDiv } from "@/components/motion";
-import { SearchIcon, RightArrowIcon, Download, Sparkles, Zap, Shield } from "lucide-react";
+import { Download, Sparkles, Zap, Shield } from "lucide-react";
 
 type ThumbnailStyle = "tech" | "gaming" | "tutorial" | "lifestyle";
 
@@ -146,7 +145,10 @@ function categorizeError(error: any): ErrorInfo {
     };
   }
 
-  if (lowerMessage.includes("api key") || lowerMessage.includes("unauthorized")) {
+  if (
+    lowerMessage.includes("api key") ||
+    lowerMessage.includes("unauthorized")
+  ) {
     return {
       type: "api",
       message: "AI service not configured. Please try a different provider.",
@@ -164,7 +166,6 @@ function categorizeError(error: any): ErrorInfo {
 function DashboardContent() {
   const { user, loading: userLoading } = useUser();
   const { message } = useMessage();
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   // Simplified state management
@@ -279,23 +280,28 @@ function DashboardContent() {
           <h1 className={title({ size: "lg" })}>Create Perfect&nbsp;</h1>
           <h1 className={title({ color: "base", size: "lg" })}>Thumbnails</h1>
           <p className={subtitle({ class: "mt-4" })}>
-            Generate eye-catching thumbnails in seconds with AI
+            Generate eye-catching thumbnails in seconds with AI&apos;s power
           </p>
         </AnimatedDiv>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Generation Form */}
           <div className="lg:col-span-2 space-y-6">
-            
             {/* Step 1: Describe Your Content */}
             <AnimatedDiv>
               <Card className="shadow-lg">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">1</div>
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                      1
+                    </div>
                     <div>
-                      <h3 className="text-xl font-semibold">Describe Your Content</h3>
-                      <p className="text-sm text-default-600">What's your video about?</p>
+                      <h3 className="text-xl font-semibold">
+                        Describe Your Content
+                      </h3>
+                      <p className="text-sm text-default-600">
+                        What&apos;s your video about?
+                      </p>
                     </div>
                   </div>
                 </CardHeader>
@@ -311,22 +317,26 @@ function DashboardContent() {
                       inputWrapper: "shadow-sm",
                     }}
                   />
-                  
+
                   {/* Quick Suggestions */}
                   <div className="space-y-2">
-                    <p className="text-sm text-default-600">Quick suggestions:</p>
+                    <p className="text-sm text-default-600">
+                      Quick suggestions:
+                    </p>
                     <div className="flex flex-wrap gap-2">
-                      {promptSuggestions.slice(0, 3).map((suggestion, index) => (
-                        <Button
-                          key={index}
-                          size="sm"
-                          variant="flat"
-                          className="text-xs"
-                          onClick={() => handleSuggestionClick(suggestion)}
-                        >
-                          {suggestion}
-                        </Button>
-                      ))}
+                      {promptSuggestions
+                        .slice(0, 3)
+                        .map((suggestion, index) => (
+                          <Button
+                            key={index}
+                            size="sm"
+                            variant="flat"
+                            className="text-xs"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                          >
+                            {suggestion}
+                          </Button>
+                        ))}
                     </div>
                   </div>
                 </CardBody>
@@ -338,10 +348,14 @@ function DashboardContent() {
               <Card className="shadow-lg">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold">2</div>
+                    <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+                      2
+                    </div>
                     <div>
                       <h3 className="text-xl font-semibold">Choose Style</h3>
-                      <p className="text-sm text-default-600">Pick the style that matches your content</p>
+                      <p className="text-sm text-default-600">
+                        Pick the style that matches your content
+                      </p>
                     </div>
                   </div>
                 </CardHeader>
@@ -367,14 +381,20 @@ function DashboardContent() {
                                 : "hover:bg-default-50"
                             }`}
                             isPressable
-                            onPress={() => setStyle(option.key as ThumbnailStyle)}
+                            onPress={() =>
+                              setStyle(option.key as ThumbnailStyle)
+                            }
                           >
                             <CardBody className="p-4">
                               <div className="flex items-center gap-3">
                                 <span className="text-2xl">{option.icon}</span>
                                 <div>
-                                  <h4 className="font-semibold">{option.label}</h4>
-                                  <p className="text-xs text-default-600">{option.description}</p>
+                                  <h4 className="font-semibold">
+                                    {option.label}
+                                  </h4>
+                                  <p className="text-xs text-default-600">
+                                    {option.description}
+                                  </p>
                                 </div>
                               </div>
                             </CardBody>
@@ -392,10 +412,14 @@ function DashboardContent() {
               <Card className="shadow-lg">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-success rounded-full flex items-center justify-center text-white font-bold">3</div>
+                    <div className="w-8 h-8 bg-success rounded-full flex items-center justify-center text-white font-bold">
+                      3
+                    </div>
                     <div>
                       <h3 className="text-xl font-semibold">Settings</h3>
-                      <p className="text-sm text-default-600">Choose your AI provider and quality</p>
+                      <p className="text-sm text-default-600">
+                        Choose your AI provider and quality
+                      </p>
                     </div>
                   </div>
                 </CardHeader>
@@ -431,11 +455,19 @@ function DashboardContent() {
                                   <div className="flex items-center gap-2">
                                     {option.icon}
                                     <div>
-                                      <h4 className="font-semibold text-sm">{option.name}</h4>
-                                      <p className="text-xs text-default-600">{option.description}</p>
+                                      <h4 className="font-semibold text-sm">
+                                        {option.name}
+                                      </h4>
+                                      <p className="text-xs text-default-600">
+                                        {option.description}
+                                      </p>
                                     </div>
                                   </div>
-                                  <Chip size="sm" color={option.badgeColor} variant="flat">
+                                  <Chip
+                                    size="sm"
+                                    color={option.badgeColor}
+                                    variant="flat"
+                                  >
                                     {option.badge}
                                   </Chip>
                                 </div>
@@ -461,7 +493,9 @@ function DashboardContent() {
                           <SelectItem key={option.value} value={option.value}>
                             <div>
                               <div className="font-medium">{option.label}</div>
-                              <div className="text-xs text-default-600">{option.description}</div>
+                              <div className="text-xs text-default-600">
+                                {option.description}
+                              </div>
                             </div>
                           </SelectItem>
                         ))}
@@ -494,11 +528,21 @@ function DashboardContent() {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <p className="font-medium">Generating...</p>
-                        <p className="text-sm text-default-600">{Math.round(progress)}%</p>
+                        <p className="text-sm text-default-600">
+                          {Math.round(progress)}%
+                        </p>
                       </div>
-                      <Progress value={progress} className="w-full" color="primary" />
+                      <Progress
+                        value={progress}
+                        className="w-full"
+                        color="primary"
+                      />
                       <p className="text-xs text-center text-default-500">
-                        Using {provider === "stability" ? "Stability AI" : "HuggingFace"} • {quality} quality
+                        Using{" "}
+                        {provider === "stability"
+                          ? "Stability AI"
+                          : "HuggingFace"}{" "}
+                        • {quality} quality
                       </p>
                     </div>
                   </CardBody>
@@ -512,10 +556,14 @@ function DashboardContent() {
                 <Card className="shadow-lg border-l-4 border-danger">
                   <CardBody className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-danger rounded-full flex items-center justify-center text-white text-sm">!</div>
+                      <div className="w-8 h-8 bg-danger rounded-full flex items-center justify-center text-white text-sm">
+                        !
+                      </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-danger">Error</h4>
-                        <p className="text-sm text-default-600">{error.message}</p>
+                        <p className="text-sm text-default-600">
+                          {error.message}
+                        </p>
                       </div>
                       {error.retryable && (
                         <Button
@@ -552,18 +600,22 @@ function DashboardContent() {
                           radius="md"
                         />
                       </div>
-                      
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium">Provider:</span>
                           <Chip size="sm" variant="flat" color="primary">
-                            {result.provider === "stability" ? "Stability AI" : "HuggingFace"}
+                            {result.provider === "stability"
+                              ? "Stability AI"
+                              : "HuggingFace"}
                           </Chip>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium">Style:</span>
                           <Chip size="sm" variant="flat" color="secondary">
-                            {styleOptions.find(s => s.key === result.style)?.label}
+                            {
+                              styleOptions.find((s) => s.key === result.style)
+                                ?.label
+                            }
                           </Chip>
                         </div>
                         <div className="flex items-center justify-between">
