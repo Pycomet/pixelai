@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
   env: {
     NEXT_FIREBASE_API_KEY: process.env.NEXT_FIREBASE_API_KEY,
     NEXT_FIREBASE_AUTH_DOMAIN: process.env.NEXT_FIREBASE_AUTH_DOMAIN,
