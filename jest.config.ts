@@ -11,7 +11,7 @@ const config: Config = {
   coverageProvider: "v8",
   setupFiles: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
-    "^lib/firebase/firebaseConfig$": "<rootDir>/__mocks__/firebaseConfig.ts",
+    "^lib/firebase/firebaseConfig$": "<rootDir>/__mocks__/firebaseConfig.js",
   },
   testEnvironment: "jsdom",
 };
